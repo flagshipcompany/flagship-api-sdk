@@ -1,5 +1,5 @@
 {
-    "name": "flagshipcompany/api-sdk",
+    "name": "flagshipcompany/flagship-api-sdk",
     "type": "library",
     "description": "Library to use FlagShip API",
     "keywords": ["flagship","api"],
