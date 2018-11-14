@@ -26,7 +26,7 @@ $flagship = new Flagship('MY_FLAGSHIP_ACCESS_TOKEN', 'MY_DOMAIN');
 try{
     //example prepare shipment request
     
-    $request = $flagship->prepreShipmentRequest([
+    $request = $flagship->prepareShipmentRequest([
   
   'from'=>[ ... ],
   'to' => [ ... ],
