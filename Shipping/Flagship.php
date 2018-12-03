@@ -2,6 +2,7 @@
 
 namespace Flagship\Shipping;
 
+use Flagship\Shipping\Requests\ValidateTokenRequest;
 use Flagship\Shipping\Requests\QuoteRequest;
 use Flagship\Shipping\Requests\RateRequest;
 use Flagship\Shipping\Requests\CreatePickupRequest;
@@ -21,6 +22,11 @@ class Flagship{
     public function __construct(string $apiToken, string $apiUrl){
         $this->apiUrl = $apiUrl;
         $this->apiToken = $apiToken;
+    }
+
+    public function validateTokenRequest(string $token) : ValidateTokenRequest {
+        $validateTokenRequest = new ValidateTokenRequest($this->apiUrl,$token);
+        return $validateTokenRequest;
     }
 
     public  function createQuoteRequest(array $payload) : QuoteRequest {
