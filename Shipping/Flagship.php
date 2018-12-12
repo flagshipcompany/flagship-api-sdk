@@ -3,6 +3,7 @@
 namespace Flagship\Shipping;
 
 use Flagship\Shipping\Requests\ValidateTokenRequest;
+use Flagship\Shipping\Requests\AvailableServicesRequest;
 use Flagship\Shipping\Requests\QuoteRequest;
 use Flagship\Shipping\Requests\RateRequest;
 use Flagship\Shipping\Requests\CreatePickupRequest;
@@ -24,6 +25,11 @@ class Flagship{
         $this->apiToken = $apiToken;
     }
 
+    public function availableServicesRequest() : AvailableServicesRequest {
+        $availableServicesRequest = new AvailableServicesRequest($this->apiToken,$this->apiUrl);
+        return $availableServicesRequest;
+    }
+
     public function validateTokenRequest(string $token) : ValidateTokenRequest {
         $validateTokenRequest = new ValidateTokenRequest($this->apiUrl,$token);
         return $validateTokenRequest;
@@ -31,7 +37,7 @@ class Flagship{
 
     public  function createQuoteRequest(array $payload) : QuoteRequest {
         $request = new QuoteRequest($this->apiToken,$this->apiUrl,$payload);
-        return $request;    
+        return $request;
     }
 
     public function getShipmentListRequest() : GetShipmentListRequest {
