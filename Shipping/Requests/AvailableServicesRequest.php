@@ -31,14 +31,25 @@ class AvailableServicesRequest extends ApiRequest{
         $couriersArray = [];
 
         foreach ($couriers as $key => $value) {
-            if($key === 'fedex'){
-                foreach ($value as $service) {
-                    $service->courier_description = 'FedEx '.$service->courier_description;
-                }
-            }
+            $this->editDescriptionForFedex($key,$value);
+            $this->editDescriptionForInternational($value);
             $couriersArray = array_merge($couriersArray,$value);
         }
         return $couriersArray;
+    }
+
+    protected function editDescriptionForFedex($key,&$value) : int {
+        foreach ($value as $service) {
+            $service->courier_description = strcasecmp($key,'fedex') === 0 ? 'FedEx '.$service->courier_description : $service->courier_description;
+        }
+        return 0;
+    }
+
+    protected function editDescriptionForInternational(&$value) : int {
+        foreach ($value as $service) {
+            $service->courier_description = stripos($service->flagship_code,'intl') !== FALSE && stripos($service->courier_description,'international') === FALSE ? $service->courier_description.' - International' : $service->courier_description;
+        }
+        return 0;
     }
 
 }
