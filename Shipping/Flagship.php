@@ -16,6 +16,7 @@ use Flagship\Shipping\Requests\CancelPickupRequest;
 use Flagship\Shipping\Requests\EditPickupRequest;
 use Flagship\Shipping\Requests\TrackShipmentRequest;
 use Flagship\Shipping\Requests\GetPickupListRequest;
+use Flagship\Shipping\Requests\PackingRequest;
 use Flagship\Shipping\objects\Rate;
 
 class Flagship{
@@ -48,6 +49,11 @@ class Flagship{
     public function prepareShipmentRequest(array $payload) : PrepareShipmentRequest {
         $prepareShipmentRequest = new PrepareShipmentRequest($this->apiUrl,$this->apiToken,$payload);
         return $prepareShipmentRequest;
+    }
+
+    public function packingRequest(array $payload) : PackingRequest {
+        $packingRequest = new PackingRequest($this->apiUrl,$this->apiToken,$payload);
+        return $packingRequest;
     }
 
     public function editShipmentRequest(array $payload,int $shipmentId) : EditShipmentRequest {
