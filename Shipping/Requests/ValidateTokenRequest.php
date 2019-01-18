@@ -6,14 +6,16 @@ use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\ValidateTokenException;
 
 class ValidateTokenRequest extends ApiRequest{
-    public function __construct(string $url,$token){
+    public function __construct(string $url,string $token, string $flagshipFor, string $version){
         $this->apiUrl = $url.'/check-token';
         $this->token = $token;
+        $this->flagshipFor = $flagshipFor;
+        $this->version = $version;
     }
 
     public function execute() : int {
         try{
-            $response = $this->api_request($this->apiUrl,[],$this->token,'GET',30);
+            $response = $this->api_request($this->apiUrl,[],$this->token,'GET',30,$this->flagshipFor,$this->version);
             return $response["httpcode"];
         }
         catch(ApiException $e){

@@ -6,7 +6,7 @@ use Flagship\Shipping\Exceptions\QuoteException;
 
 abstract class ApiRequest{
 
-    protected function api_request(string $url,array $json,string $apiToken,string $method, int $timeout) : array 
+    protected function api_request(string $url,array $json,string $apiToken,string $method, int $timeout, string $flagshipFor=null, string $version=null) : array
 
     {
         $curl = curl_init();
@@ -22,11 +22,11 @@ abstract class ApiRequest{
             CURLOPT_POSTFIELDS  => json_encode($json),
             CURLOPT_HTTPHEADER => array(
                 "X-Smartship-Token: ". $apiToken,
-                "Content-Type: application/json" 
+                "Content-Type: application/json",
+                "X-F4".$flagshipFor."-Version: ".$version
                 )
             ];
 
-        
         curl_setopt_array($curl, $options);
 
         $response = curl_exec($curl);
@@ -36,9 +36,9 @@ abstract class ApiRequest{
             "response"  => json_decode($response),
             "httpcode"  => $httpcode
         ];
-        
+
         curl_close($curl);
-        
+
         if(($httpcode >= 400 && $httpcode < 600) || ($httpcode === 0) || ($response === false) || ($httpcode === 209)){
             throw new ApiException($response,$httpcode);
         }

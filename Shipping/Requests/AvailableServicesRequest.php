@@ -6,14 +6,16 @@ use Flagship\Shipping\Exceptions\AvailableServiceException;
 use Flagship\Shipping\Collections\AvailableServicesCollection;
 
 class AvailableServicesRequest extends ApiRequest{
-    public function __construct($apiToken, $baseUrl){
+    public function __construct(string $apiToken,string $baseUrl,string $flagshipFor,string $version){
         $this->apiToken = $apiToken;
         $this->apiUrl = $baseUrl.'/ship/available_services';
+        $this->flagshipFor = $flagshipFor;
+        $this->version = $version;
     }
 
     public function execute() : AvailableServicesCollection {
         try{
-            $response = $this->api_request($this->apiUrl,[],$this->apiToken,'GET',10);
+            $response = $this->api_request($this->apiUrl,[],$this->apiToken,'GET',10,$this->flagshipFor,$this->version);
             $availableServicesArray = $this->createArrayOfServices($response);
             $availableServicesCollection = new AvailableServicesCollection();
             $availableServicesCollection->importServices($availableServicesArray);
