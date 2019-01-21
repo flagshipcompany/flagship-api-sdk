@@ -7,6 +7,8 @@ use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\PrepareShipmentException;
 
 class PrepareShipmentRequest extends ApiRequest{
+    protected $responseCode;
+
     public function __construct(string $baseUrl, string $token, array $payload, string $flagshipFor, string $version){
 
         $this->url = $baseUrl.'/ship/prepare';
@@ -20,11 +22,18 @@ class PrepareShipmentRequest extends ApiRequest{
         try{
             $prepareShipmentRequest = $this->api_request($this->url,$this->payload,$this->token,'POST',30,$this->flagshipFor,$this->version);
             $prepareShipment = new Shipment($prepareShipmentRequest["response"]->content);
-
+            $this->responseCode = $prepareShipmentRequest["httpcode"];
             return $prepareShipment;
         }
         catch(ApiException $e){
             throw new PrepareShipmentException($e->getMessage());
         }
+    }
+
+    public function getResponseCode() : ?int {
+        if(isset($this->responseCode)){
+            return $this->responseCode;
+        }
+        return NULL;
     }
 }

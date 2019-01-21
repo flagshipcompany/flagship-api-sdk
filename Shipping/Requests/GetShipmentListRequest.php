@@ -9,6 +9,7 @@ use Flagship\Shipping\Collections\GetShipmentsListCollection;
 
 class GetShipmentListRequest extends ApiRequest{
 
+    protected $responseCode;
     public function __construct(string $baseUrl,string $apiToken, string $flagshipFor, string $version) {
         $this->apiToken = $apiToken;
         $this->url = $baseUrl . '/ship/shipments';
@@ -21,12 +22,20 @@ class GetShipmentListRequest extends ApiRequest{
             $request = $this->api_request($this->url,[],$this->apiToken,"GET",30,$this->flagshipFor,$this->version);
             $shipments = new GetShipmentsListCollection();
             $shipments->importShipments($request["response"]->content->records);
+            $this->responseCode = $request["httpcode"];
             return $shipments;
         }
         catch(ApiException $e){
             throw new GetShipmentListException($e->getMessage());
         }
 
+    }
+
+    public function getResponseCode() : ?int {
+        if(isset($this->responseCode)){
+            return $this->responseCode;
+        }
+        return NULL;
     }
 
 }

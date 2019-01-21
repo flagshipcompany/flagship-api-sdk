@@ -12,7 +12,7 @@ class CancelPickupRequest extends ApiRequest{
         $this->version = $version;
     }
 
-    public function execute()  {
+    public function execute() : int {
         try{
             $cancelPickupRequest = $this->api_request($this->apiUrl,[],$this->apiToken,'DELETE',30,$this->flagshipFor,$this->version);
             return $cancelPickupRequest["httpcode"];

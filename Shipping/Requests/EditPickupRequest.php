@@ -8,6 +8,8 @@ use Flagship\Shipping\Objects\Pickup;
 
 class EditPickupRequest extends ApiRequest{
 
+    protected $responseCode;
+
     public function __construct(string $baseUrl,string $token,array $payload,string $id, string $flagshipFor, string $version){
 
         $this->apiUrl = $baseUrl.'/pickups/'.$id;
@@ -21,10 +23,18 @@ class EditPickupRequest extends ApiRequest{
         try{
             $editPickupRequest = $this->api_request($this->apiUrl,$this->editPickupPayload,$this->apiToken,'PUT',30,$this->flagshipFor,$this->version);
             $editPickup = new Pickup($editPickupRequest["response"]->content);
+            $this->responseCode = $editPickupRequest["httpcode"];
             return $editPickup;
         }
         catch(ApiException $e){
             throw new EditPickupException($e->getMessage());
         }
+    }
+
+    public function getResponseCode() : ?int {
+        if(isset($this->responseCode)){
+            return $this->responseCode;
+        }
+        return NULL;
     }
 }

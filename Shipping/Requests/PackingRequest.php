@@ -7,6 +7,8 @@ use Flagship\Shipping\Exceptions\PackingException;
 use Flagship\Shipping\Collections\PackingCollection;
 
 class PackingRequest extends ApiRequest{
+
+    protected $responseCode;
     public function __construct(string $apiUrl,string $apiToken, array $payload, string $flagshipFor, string $version){
         $this->apiToken = $apiToken;
         $this->apiUrl = $apiUrl.'/ship/packing';
@@ -22,11 +24,18 @@ class PackingRequest extends ApiRequest{
             $packages = new PackingCollection();
 
             $packages->importPackages($packingRequest["response"]->content->packages);
-
+            $this->responseCode = $packingRequest["httpcode"];
             return $packages;
         }
         catch(ApiException $e){
             throw new PackingException($e->getMessage());
         }
+    }
+
+    public function getResponseCode() : ?int {
+        if(isset($this->responseCode)){
+            return $this->responseCode;
+        }
+        return NULL;
     }
 }

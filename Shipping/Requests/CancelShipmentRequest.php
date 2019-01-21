@@ -22,4 +22,5 @@ class CancelShipmentRequest extends ApiRequest{
             throw new CancelShipmentException($e->getMessage());
         }
     }
+
 }

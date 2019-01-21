@@ -8,6 +8,8 @@ use Flagship\Shipping\Exceptions\EditShipmentException;
 
 class EditShipmentRequest extends Apirequest{
 
+    protected $responseCode;
+
     public function __construct(string $baseUrl,string $token,array $payload,string $shipmentId, string $flagshipFor, string $version){
         $this->apiUrl = $baseUrl.'/ship/shipments/'.$shipmentId;
         $this->apiToken = $token;
@@ -20,11 +22,19 @@ class EditShipmentRequest extends Apirequest{
         try{
             $editShipmentRequest = $this->api_request($this->apiUrl,$this->payload,$this->apiToken,'PUT',30,$this->flagshipFor,$this->version);
             $editShipment = new Shipment($editShipmentRequest["response"]->content);
+            $this->responseCode = $editShipmentRequest["httpcode"];
             return $editShipment;
         }
         catch(ApiException $e){
             throw new EditShipmentException($e->getMessage());
         }
+    }
+
+    public function getResponseCode() : ?int {
+        if(isset($this->responseCode)){
+            return $this->responseCode;
+        }
+        return NULL;
     }
 
 }

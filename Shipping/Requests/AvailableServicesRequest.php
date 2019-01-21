@@ -6,6 +6,8 @@ use Flagship\Shipping\Exceptions\AvailableServiceException;
 use Flagship\Shipping\Collections\AvailableServicesCollection;
 
 class AvailableServicesRequest extends ApiRequest{
+    protected $responseCode;
+
     public function __construct(string $apiToken,string $baseUrl,string $flagshipFor,string $version){
         $this->apiToken = $apiToken;
         $this->apiUrl = $baseUrl.'/ship/available_services';
@@ -19,11 +21,19 @@ class AvailableServicesRequest extends ApiRequest{
             $availableServicesArray = $this->createArrayOfServices($response);
             $availableServicesCollection = new AvailableServicesCollection();
             $availableServicesCollection->importServices($availableServicesArray);
+            $this->responseCode = $response["httpcode"];
             return $availableServicesCollection;
         }
         catch(ApiException $e){
             throw new AvailableServicesException($e->getMessage());
         }
+    }
+
+    public function getResponseCode() : ?int {
+        if(isset($this->responseCode)){
+            return $this->responseCode;
+        }
+        return NULL;
     }
 
     protected function createArrayOfServices($responseArray) : array {
