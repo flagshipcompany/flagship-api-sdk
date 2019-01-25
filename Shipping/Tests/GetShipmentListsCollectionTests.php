@@ -2,7 +2,7 @@
 namespace Flagship\Shipping\Tests;
 
 use \PHPUnit\Framework\TestCase;
-use Flagship\Shipping\Collections\GetShipmentsListCollection;
+use Flagship\Shipping\Collections\GetShipmentListCollection;
 use Flagship\Shipping\Exceptions\GetShipmentListException;
 use Flagship\Shipping\Objects\Shipment;
 
@@ -25,7 +25,7 @@ class GetShipmentListsCollectionTests extends TestCase{
     public function testGetByStatus(){
         
         $this->assertNotNull($this->shipmentsCollection->getByStatus('dispatched'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getByStatus('dispatched'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByStatus('dispatched'));
         $this->assertSame('FlagShip Courier Solutions', $this->shipmentsCollection->getByStatus('DiSPAtchEd')->nth(6)->first()->shipment->from->name);
     }
 
@@ -39,61 +39,61 @@ class GetShipmentListsCollectionTests extends TestCase{
 
     public function testGetBySender(){
         $this->assertNotNull($this->shipmentsCollection->getBySender('WooComm'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getBySender('WooComm'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getBySender('WooComm'));
         $this->assertSame('H9R 5P9', $this->shipmentsCollection->getBySender('WooComm')->first()->shipment->from->postal_code);
     }
 
     public function testGetByRecevier(){
 
         $this->assertNotNull($this->shipmentsCollection->getByReceiver('Corey Leonard'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getByReceiver('Corey Leonard'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByReceiver('Corey Leonard'));
         $this->assertSame('Contac', $this->shipmentsCollection->getByReceiver('Corey Leonard')->last()->shipment->to->name);
     }
 
     public function testGetByReference(){
     
         $this->assertNotNull($this->shipmentsCollection->getByReference('Shipment reference here'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getByReference('Shipment reference here'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByReference('Shipment reference here'));
         $this->assertSame('ups', $this->shipmentsCollection->getByReference('Shipment reference here')->first()->shipment->service->courier_name);
     }
 
     public function testGetByDate(){
          
         $this->assertNotNull($this->shipmentsCollection->getByDate('2018-10-22'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getByDate('2018-10-22'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByDate('2018-10-22'));
         $this->assertSame(true, $this->shipmentsCollection->getByDate('2018-10-22')->last()->shipment->to->is_commercial);
     }
 
     public function testGetByCourier(){
          
         $this->assertNotNull($this->shipmentsCollection->getByCourier('ups'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getByCourier('ups'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByCourier('ups'));
         $this->assertSame('2018-10-29', $this->shipmentsCollection->getByCourier('purolator')->first()->shipment->options->shipping_date);
     }
 
     public function testGetBySenderPhone(){
          
         $this->assertNotNull($this->shipmentsCollection->getBySenderPhone('5147390202'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getBySenderPhone('5147390202'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getBySenderPhone('5147390202'));
         $this->assertSame('Flagship Courier Solutions', $this->shipmentsCollection->getBySenderPhone('5147390202')->first()->shipment->from->name);
     }
 
     public function testGetByReceiverPhone(){
         $this->assertNotNull($this->shipmentsCollection->getByReceiverPhone('4567890123'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getByReceiverPhone('4567890123'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByReceiverPhone('4567890123'));
         $this->assertSame('shakespeare', $this->shipmentsCollection->getByReceiverPhone('4567890123')->first()->shipment->to->name);
     }
 
     public function testGetBySenderCompany(){
         $this->assertNotNull($this->shipmentsCollection->getBySenderCompany('BigSigns.com'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getBySenderCompany('BigSigns.com'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getBySenderCompany('BigSigns.com'));
         $this->assertSame('49417', $this->shipmentsCollection->getBySenderCompany('BigSigns.com')->last()->shipment->from->postal_code);
     }
 
     public function testGetByRecevierCompany(){
     
         $this->assertNotNull($this->shipmentsCollection->getByReceiverCompany('Flagship Courier Solutions'));
-        $this->assertInstanceOf(GetShipmentsListCollection::class , $this->shipmentsCollection->getByReceiverCompany('Flagship Courier Solutions'));
+        $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByReceiverCompany('Flagship Courier Solutions'));
         $this->assertSame('SAINT-LAURENT', $this->shipmentsCollection->getByReceiverCompany('Flagship Courier Solutions')->first()->shipment->to->city);
     }
 
@@ -1129,7 +1129,7 @@ class GetShipmentListsCollectionTests extends TestCase{
                 "brokerage_details": null
             }
         ]';
-        $this->shipmentsCollection = new GetShipmentsListCollection();
+        $this->shipmentsCollection = new GetShipmentListCollection();
         $this->shipmentsCollection->importShipments(json_decode($response));
     }
  }

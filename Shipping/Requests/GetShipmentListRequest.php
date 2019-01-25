@@ -5,7 +5,7 @@ namespace Flagship\Shipping\Requests;
 use Flagship\Apis\Requests\ApiRequest;
 use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\GetShipmentListException;
-use Flagship\Shipping\Collections\GetShipmentsListCollection;
+use Flagship\Shipping\Collections\GetShipmentListCollection;
 
 class GetShipmentListRequest extends ApiRequest{
 
@@ -17,10 +17,10 @@ class GetShipmentListRequest extends ApiRequest{
         $this->version = $version;
     }
 
-    public function execute() : GetShipmentsListCollection {
+    public function execute() : GetShipmentListCollection {
         try{
             $request = $this->api_request($this->url,[],$this->apiToken,"GET",30,$this->flagshipFor,$this->version);
-            $shipments = new GetShipmentsListCollection();
+            $shipments = new GetShipmentListCollection();
             $shipments->importShipments($request["response"]->content->records);
             $this->responseCode = $request["httpcode"];
             return $shipments;

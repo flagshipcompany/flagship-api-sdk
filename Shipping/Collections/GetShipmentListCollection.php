@@ -6,7 +6,7 @@ use Flagship\Shipping\Exceptions\GetShipmentListException;
 use Flagship\Shipping\Objects\Shipment;
 use Illuminate\Support\Collection;
 
-class GetShipmentsListCollection extends Collection{
+class GetShipmentListCollection extends Collection{
 
     public function importShipments(array $shipments) : array {
         $allShipments = [];
@@ -36,7 +36,7 @@ class GetShipmentsListCollection extends Collection{
         return $result->first();
     }
 
-    public function getByStatus(string $status) : GetShipmentsListCollection {
+    public function getByStatus(string $status) : GetShipmentListCollection {
         $result = $this->filter(function($value,$key) use ($status){
             return strcasecmp($value->shipment->status,$status) === 0;
         });
@@ -54,7 +54,7 @@ class GetShipmentsListCollection extends Collection{
         return $result->first();
     }
 
-    public function getBySender(string $name) : GetShipmentsListCollection {
+    public function getBySender(string $name) : GetShipmentListCollection {
         $result = $this->filter(function($value,$key) use ($name){
             return strcasecmp($value->shipment->from->attn,$name) === 0 ;
         });
@@ -64,7 +64,7 @@ class GetShipmentsListCollection extends Collection{
         return $result;
     }
 
-    public function getByReceiver(string $name) : GetShipmentsListCollection {
+    public function getByReceiver(string $name) : GetShipmentListCollection {
         $result = $this->filter(function($value,$key) use ($name){
             return strcasecmp($value->shipment->to->attn,$name) === 0;
         });
@@ -74,7 +74,7 @@ class GetShipmentsListCollection extends Collection{
         return $result;
     }
 
-    public function getByReference(string $reference) : GetShipmentsListCollection {
+    public function getByReference(string $reference) : GetShipmentListCollection {
         $result = $this->filter(function($value,$key) use ($reference){
             return strcasecmp($value->shipment->options->reference,$reference) === 0;
         });
@@ -84,7 +84,7 @@ class GetShipmentsListCollection extends Collection{
         return $result;
     }
 
-    public function getByDate(string $date) : GetShipmentsListCollection {
+    public function getByDate(string $date) : GetShipmentListCollection {
         $result = $this->where('shipment.options.shipping_date',$date);
         if($result->isEmpty()){
             throw new GetShipmentListException('No shipments found for Shipping Date : '.$date);
@@ -92,7 +92,7 @@ class GetShipmentsListCollection extends Collection{
         return $result;
     }
 
-    public function getByCourier(string $courier) : GetShipmentsListCollection {
+    public function getByCourier(string $courier) : GetShipmentListCollection {
         $result = $this->filter(function($value,$key) use ($courier){
             return strcasecmp($value->shipment->service->courier_name,$courier) === 0;
         });
@@ -102,7 +102,7 @@ class GetShipmentsListCollection extends Collection{
         return $result;
     }
 
-    public function getBySenderPhone(string $phone) : GetShipmentsListCollection {
+    public function getBySenderPhone(string $phone) : GetShipmentListCollection {
         $result = $this->where('shipment.from.phone',$phone);
         if($result->isEmpty()){
             throw new GetShipmentListException('No shipments found for Sender\'s Phone : '.$phone);
@@ -110,7 +110,7 @@ class GetShipmentsListCollection extends Collection{
         return $result;
     }
 
-    public function getByReceiverPhone(string $phone) : GetShipmentsListCollection {
+    public function getByReceiverPhone(string $phone) : GetShipmentListCollection {
         $result = $this->where('shipment.to.phone',$phone);
         if($result->isEmpty()){
             throw new GetShipmentListException('No shipments found for Receiver\'s Phone : '.$phone);
@@ -118,7 +118,7 @@ class GetShipmentsListCollection extends Collection{
         return $result;
     }
 
-    public function getBySenderCompany(string $company) : GetShipmentsListCollection {
+    public function getBySenderCompany(string $company) : GetShipmentListCollection {
         $result = $this->filter(function($value,$key) use ($company){
             return strcasecmp($value->shipment->from->name,$company) === 0 ;
         });
@@ -128,7 +128,7 @@ class GetShipmentsListCollection extends Collection{
         return $result;
     }
 
-    public function getByReceiverCompany(string $company) : GetShipmentsListCollection{
+    public function getByReceiverCompany(string $company) : GetShipmentListCollection{
         $result = $this->filter(function($value,$key) use ($company){
             return strcasecmp($value->shipment->to->name,$company) === 0 ;
         });
@@ -140,4 +140,3 @@ class GetShipmentsListCollection extends Collection{
     }
 
 }
-

@@ -17,6 +17,7 @@ use Flagship\Shipping\Requests\EditPickupRequest;
 use Flagship\Shipping\Requests\TrackShipmentRequest;
 use Flagship\Shipping\Requests\GetPickupListRequest;
 use Flagship\Shipping\Requests\PackingRequest;
+use Flagship\Shipping\Requests\GetShipmentByIdRequest;
 use Flagship\Shipping\objects\Rate;
 
 class Flagship{
@@ -46,6 +47,11 @@ class Flagship{
     public function getShipmentListRequest() : GetShipmentListRequest {
         $shipmentListRequest = new GetShipmentListRequest($this->apiUrl,$this->apiToken,$this->flagshipFor,$this->version);
         return $shipmentListRequest;
+    }
+
+    public function getShipmentByIdRequest(int $id) : GetShipmentByIdRequest {
+        $shipmentRequest = new GetShipmentByIdRequest($this->apiUrl,$this->apiToken,$this->flagshipFor,$this->version,$id);
+        return $shipmentRequest;
     }
 
     public function prepareShipmentRequest(array $payload) : PrepareShipmentRequest {

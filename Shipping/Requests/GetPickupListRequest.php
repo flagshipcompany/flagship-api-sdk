@@ -2,7 +2,7 @@
 
 namespace Flagship\Shipping\Requests;
 use Flagship\Apis\Requests\ApiRequest;
-use Flagship\Shipping\Collections\GetPickupsListCollection;
+use Flagship\Shipping\Collections\GetPickupListCollection;
 use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\GetPickupListException;
 
@@ -16,10 +16,10 @@ class GetPickupListRequest extends ApiRequest{
         $this->version = $version;
     }
 
-    public function execute() : GetPickupsListCollection {
+    public function execute() : GetPickupListCollection {
         try{
             $getPickupListRequest = $this->api_request($this->apiUrl,[],$this->apiToken,'GET',10,$this->flagshipFor,$this->version);
-            $pickupList = new GetPickupsListCollection();
+            $pickupList = new GetPickupListCollection();
             $pickupList->importPickups($getPickupListRequest["response"]->content->records);
             $this->responseCode = $getPickupListRequest["httpcode"];
             return $pickupList;
