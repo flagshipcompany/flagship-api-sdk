@@ -11,8 +11,8 @@ class QuoteRequest extends ApiRequest{
 
     protected $responseCode;
 
-    public function __construct(string $apiToken,string $baseUrl,array $payloadArray, string $flagshipFor, string $version){
-        $this->apiToken = $apiToken;
+    public function __construct(string $token,string $baseUrl,array $payloadArray, string $flagshipFor, string $version){
+        $this->token = $token;
         $this->payload = $payloadArray;
         $this->url = $baseUrl . '/ship/rates';
         $this->flagshipFor = $flagshipFor;
@@ -22,7 +22,7 @@ class QuoteRequest extends ApiRequest{
     public function execute() : RatesCollection {
 
         try {
-            $responseArray = $this->api_request($this->url,$this->payload,$this->apiToken,'POST',10,$this->flagshipFor,$this->version);
+            $responseArray = $this->api_request($this->url,$this->payload,$this->token,'POST',10,$this->flagshipFor,$this->version);
             $newQuotes = new RatesCollection();
             $newQuotes->importRates($responseArray["response"]->content);
             $this->responseCode = $responseArray["httpcode"];

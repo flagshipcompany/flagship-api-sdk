@@ -420,7 +420,7 @@ class AvailableServicesCollectionTests extends TestCase{
             }
         ]';
       $this->servicesCollection = new AvailableServicesCollection();
-      $availableServicesRequest = new AvailableServicesRequest('dummyToken','baseUrl');
+      $availableServicesRequest = new AvailableServicesRequest('dummyToken','baseUrl','testing','1.0.3');
 
       $this->servicesCollection->importServices(json_decode($response));
 

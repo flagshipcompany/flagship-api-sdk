@@ -8,16 +8,16 @@ use Flagship\Shipping\Collections\AvailableServicesCollection;
 class AvailableServicesRequest extends ApiRequest{
     protected $responseCode;
 
-    public function __construct(string $apiToken,string $baseUrl,string $flagshipFor,string $version){
-        $this->apiToken = $apiToken;
-        $this->apiUrl = $baseUrl.'/ship/available_services';
+    public function __construct(string $token,string $baseUrl,string $flagshipFor,string $version){
+        $this->token = $token;
+        $this->url = $baseUrl.'/ship/available_services';
         $this->flagshipFor = $flagshipFor;
         $this->version = $version;
     }
 
     public function execute() : AvailableServicesCollection {
         try{
-            $response = $this->api_request($this->apiUrl,[],$this->apiToken,'GET',10,$this->flagshipFor,$this->version);
+            $response = $this->api_request($this->url,[],$this->token,'GET',10,$this->flagshipFor,$this->version);
             $availableServicesArray = $this->createArrayOfServices($response);
             $availableServicesCollection = new AvailableServicesCollection();
             $availableServicesCollection->importServices($availableServicesArray);

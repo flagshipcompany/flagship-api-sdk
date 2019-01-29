@@ -6,20 +6,31 @@ use Flagship\Apis\Requests\ApiRequest;
 use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\GetShipmentListException;
 use Flagship\Shipping\Collections\GetShipmentListCollection;
+use Flagship\Shipping\Exceptions\FilterException;
 
 class GetShipmentListRequest extends ApiRequest{
 
     protected $responseCode;
-    public function __construct(string $baseUrl,string $apiToken, string $flagshipFor, string $version) {
-        $this->apiToken = $apiToken;
+    protected $filters;
+    public function __construct(string $baseUrl,string $token, string $flagshipFor, string $version) {
+        $this->token = $token;
         $this->url = $baseUrl . '/ship/shipments';
         $this->flagshipFor = $flagshipFor;
         $this->version = $version;
+        $this->filters = [
+                    'courier',
+                    'status',
+                    'reference',
+                    'tracking_number',
+                    'package_pin',
+                    'page',
+                    'limit'
+                ];
     }
 
     public function execute() : GetShipmentListCollection {
         try{
-            $request = $this->api_request($this->url,[],$this->apiToken,"GET",30,$this->flagshipFor,$this->version);
+            $request = $this->api_request($this->url,[],$this->token,"GET",30,$this->flagshipFor,$this->version);
             $shipments = new GetShipmentListCollection();
             $shipments->importShipments($request["response"]->content->records);
             $this->responseCode = $request["httpcode"];
@@ -36,6 +47,14 @@ class GetShipmentListRequest extends ApiRequest{
             return $this->responseCode;
         }
         return NULL;
+    }
+
+    public function addFilter($key,$value) : GetShipmentListRequest {
+        try{
+            return $this->addRequestFilter($key,$value);
+        }catch(FilterException $e){
+            throw new GetShipmentListException($e->getMessage(),$e->getCode());
+        }
     }
 
 }

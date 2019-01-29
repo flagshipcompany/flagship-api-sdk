@@ -2,7 +2,7 @@
 
 namespace Flagship\Apis\Requests;
 use Flagship\Apis\Exceptions\ApiException;
-use Flagship\Shipping\Exceptions\QuoteException;
+use Flagship\Shipping\Exceptions\FilterException;
 
 abstract class ApiRequest{
 
@@ -44,6 +44,15 @@ abstract class ApiRequest{
         }
 
         return $responseArray;
+    }
+
+    protected function addRequestFilter($key,$value){
+
+        if(in_array($key,$this->filters)){
+            $this->url = $this->url.'?'.$key.'='.$value;
+            return $this;
+        }
+        throw new FilterException("Invalid filter argument provided");
     }
 
 }

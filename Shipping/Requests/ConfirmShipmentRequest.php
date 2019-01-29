@@ -10,8 +10,8 @@ use Flagship\Shipping\Exceptions\ConfirmShipmentException;
 class ConfirmShipmentRequest extends ApiRequest{
     protected $responseCode;
     public function __construct(string $baseUrl, string $token, array $payload, string $flagshipFor, string $version){
-        $this->apiUrl = $baseUrl.'/ship/confirm';
-        $this->apiToken = $token;
+        $this->url = $baseUrl.'/ship/confirm';
+        $this->token = $token;
         $this->payload = $payload;
         $this->flagshipFor = $flagshipFor;
         $this->version = $version;
@@ -19,7 +19,7 @@ class ConfirmShipmentRequest extends ApiRequest{
 
     public function execute() : Shipment {
         try{
-            $confirmShipmentRequest = $this->api_request($this->apiUrl,$this->payload,$this->apiToken,'POST',30,$this->flagshipFor,$this->version);
+            $confirmShipmentRequest = $this->api_request($this->url,$this->payload,$this->token,'POST',30,$this->flagshipFor,$this->version);
             $confirmShipment = new Shipment($confirmShipmentRequest["response"]->content);
             $this->responseCode = $confirmShipmentRequest["httpcode"];
             return $confirmShipment;

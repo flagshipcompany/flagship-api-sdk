@@ -7,15 +7,15 @@ use Flagship\Shipping\Exceptions\CancelShipmentException;
 class CancelShipmentRequest extends ApiRequest{
     public function __construct(string $baseUrl,string $token, int $id, string $flagshipFor, string $version){
 
-        $this->apiUrl = $baseUrl.'/ship/shipments/'.$id;
-        $this->apiToken = $token;
+        $this->url = $baseUrl.'/ship/shipments/'.$id;
+        $this->token = $token;
         $this->flagshipFor = $flagshipFor;
         $this->version = $version;
     }
 
     public function execute() : int {
         try{
-            $cancelShipmentRequest = $this->api_request($this->apiUrl,[],$this->apiToken,'DELETE',0,$this->flagshipFor,$this->version);
+            $cancelShipmentRequest = $this->api_request($this->url,[],$this->token,'DELETE',0,$this->flagshipFor,$this->version);
             return $cancelShipmentRequest["httpcode"] ;
         }
         catch(ApiException $e){

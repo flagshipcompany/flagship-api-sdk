@@ -6,7 +6,7 @@ use Flagship\Shipping\Objects\Package;
 
 
 class Shipment{
-        
+
 
         public function __construct(\stdclass $shipment){
             $this->shipment = $shipment;
@@ -160,17 +160,17 @@ class Shipment{
 
         public function getReceiverDetails() : ?array {
             $receiver = property_exists($this->shipment, 'to') ?json_decode(json_encode($this->shipment->to),TRUE) : NULL;
-           
+
             return $receiver;
         }
 
         public function getReference() : ?string {
-            return property_exists($this->shipment, 'reference') ? $this->shipment->options->reference : NULL ;
+            return property_exists($this->shipment->options, 'reference') ? $this->shipment->options->reference : NULL ;
         }
 
 
         public function getDriverInstructions() : ?string {
-            
+
             return property_exists($this->shipment, 'options') ? (property_exists($this->shipment->options, 'driver_instructions') ? $this->shipment->options->driver_instructions : NULL) : NULL;
 
         }
@@ -278,7 +278,7 @@ class Shipment{
             if(is_object($this->shipment->packages)){
                 return $this->shipment->packages->items;
             }
-            
+
             foreach ($this->shipment->packages as $item) {
                 $items[] = $item;
             }
@@ -294,7 +294,7 @@ class Shipment{
             if(property_exists($this->shipment,'price')){
                 return $this->shipment->price->subtotal;
             }
-            return NULL;            
+            return NULL;
         }
 
 
@@ -306,7 +306,7 @@ class Shipment{
             if(property_exists($this->shipment,'price')){
                 return $this->shipment->price->total;
             }
-            return NULL; 
+            return NULL;
         }
 
 
@@ -349,7 +349,7 @@ class Shipment{
         public function getDebits() : ?array{
             $debits = property_exists($this->shipment, 'debits') ? $this->shipment->debits : $this->shipment->price->debits;
             return $debits;
-        } 
+        }
 
 
     public function getLabel() : ?string {
@@ -377,7 +377,7 @@ class Shipment{
     }
 
     public function isDocumentsOnly() : ?bool {
-            
+
             return property_exists($this->shipment, 'documents_only') ? ($this->shipment->documents_only ? TRUE : FALSE ) : NULL;
         }
 
@@ -390,5 +390,5 @@ class Shipment{
         return property_exists($this->shipment->service, 'transit_time') ? $this->shipment->service->transit_time : NULL ;
     }
 
-    
+
 }

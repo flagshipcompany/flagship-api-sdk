@@ -11,8 +11,8 @@ class EditShipmentRequest extends Apirequest{
     protected $responseCode;
 
     public function __construct(string $baseUrl,string $token,array $payload,string $shipmentId, string $flagshipFor, string $version){
-        $this->apiUrl = $baseUrl.'/ship/shipments/'.$shipmentId;
-        $this->apiToken = $token;
+        $this->url = $baseUrl.'/ship/shipments/'.$shipmentId;
+        $this->token = $token;
         $this->payload = $payload;
         $this->flagshipFor = $flagshipFor;
         $this->version = $version;
@@ -20,7 +20,7 @@ class EditShipmentRequest extends Apirequest{
 
     public function execute() : Shipment {
         try{
-            $editShipmentRequest = $this->api_request($this->apiUrl,$this->payload,$this->apiToken,'PUT',30,$this->flagshipFor,$this->version);
+            $editShipmentRequest = $this->api_request($this->url,$this->payload,$this->token,'PUT',30,$this->flagshipFor,$this->version);
             $editShipment = new Shipment($editShipmentRequest["response"]->content);
             $this->responseCode = $editShipmentRequest["httpcode"];
             return $editShipment;

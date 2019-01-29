@@ -5,20 +5,28 @@ use Flagship\Apis\Requests\ApiRequest;
 use Flagship\Shipping\Collections\GetPickupListCollection;
 use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\GetPickupListException;
+use Flagship\Shipping\Exceptions\FilterException;
 
 class GetPickupListRequest extends ApiRequest{
 
     protected $responseCode;
+    protected $filters;
     public function __construct(string $baseUrl,string $token, string $flagshipFor, string $version){
-        $this->apiUrl = $baseUrl.'/pickups';
-        $this->apiToken = $token;
+        $this->url = $baseUrl.'/pickups';
+        $this->token = $token;
         $this->flagshipFor = $flagshipFor;
         $this->version = $version;
+        $this->filters =[
+                            'courier',
+                            'date',
+                            'page',
+                            'limit'
+                        ];
     }
 
     public function execute() : GetPickupListCollection {
         try{
-            $getPickupListRequest = $this->api_request($this->apiUrl,[],$this->apiToken,'GET',10,$this->flagshipFor,$this->version);
+            $getPickupListRequest = $this->api_request($this->url,[],$this->token,'GET',10,$this->flagshipFor,$this->version);
             $pickupList = new GetPickupListCollection();
             $pickupList->importPickups($getPickupListRequest["response"]->content->records);
             $this->responseCode = $getPickupListRequest["httpcode"];
@@ -34,5 +42,13 @@ class GetPickupListRequest extends ApiRequest{
             return $this->responseCode;
         }
         return NULL;
+    }
+
+    public function addFilter($key,$value) : GetPickupListRequest {
+        try{
+            return $this->addRequestFilter($key,$value);
+        }catch(FilterException $e){
+            throw new GetPickupListException($e->getMessage(),$e->getCode());
+        }
     }
 }
