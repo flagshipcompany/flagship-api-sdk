@@ -2,7 +2,7 @@
 namespace Flagship\Shipping\Requests;
 use Flagship\Apis\Requests\ApiRequest;
 use Flagship\Apis\Exceptions\ApiException;
-use Flagship\Shipping\Exceptions\AvailableServiceException;
+use Flagship\Shipping\Exceptions\AvailableServicesException;
 use Flagship\Shipping\Collections\AvailableServicesCollection;
 
 class AvailableServicesRequest extends ApiRequest{
