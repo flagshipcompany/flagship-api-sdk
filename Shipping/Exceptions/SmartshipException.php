@@ -12,7 +12,7 @@ class SmartshipException extends \Exception{
             return $errorsArray;
         }
 
-        if(!$this->isJson($this->message)){ 
+        if(!$this->isJson($this->message) || is_string($this->message)){ 
             
             $this->message = parent::getMessage();
             $errorsArray = [ $this->message ];
