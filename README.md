@@ -8,7 +8,7 @@ Please go through the documentation at https://docs.smartship.io/ for all inform
 # Installation
 
 ```
-composer require flagshipcompany/flagship-api-sdk
+composer require flagshipcompany/flagship-api-sdk : ^1.1
 composer update
 ```
 
