@@ -4,6 +4,7 @@ namespace Flagship\Shipping\Requests;
 use Flagship\Apis\Requests\ApiRequest;
 use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\TrackShipmentException;
+use Flagship\Shipping\Objects\TrackShipment;
 
 class TrackShipmentRequest extends ApiRequest{
 
@@ -14,13 +15,17 @@ class TrackShipmentRequest extends ApiRequest{
         $this->version = $version;
     }
 
-    public function execute() : int {
+    public function execute() {
         try{
             $trackShipment = $this->api_request($this->url,[],$this->token,'GET',30,$this->flagshipFor,$this->version);
-            return $trackShipment["httpcode"];
+            $this->responseCode = $trackShipment["httpcode"];
+            return new TrackShipment($trackShipment["response"]->content);
         }
         catch(ApiException $e){
             throw new TrackShipmentException($e->getMessage(),$e->getCode());
         }
+    }
+    public function getResponseCode() : int {
+        return $this->responseCode;
     }
 }

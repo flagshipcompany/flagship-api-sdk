@@ -72,7 +72,7 @@ class ShipmentTests extends TestCase{
     }
 
     public function testGetCommercialInvoice(){
-       
+
        $this->assertSame(NULL, $this->shipment->getCommercialInvoice());
     }
 
@@ -181,7 +181,7 @@ class ShipmentTests extends TestCase{
    public function testGetReceiverPhoneExt(){
        $this->assertSame(NULL, $this->shipment->getReceiverPhoneExt());
    }
-  
+
     protected function setup(){
         $response  = '            {
                 "id": 2950191,
@@ -277,7 +277,7 @@ class ShipmentTests extends TestCase{
             }';
         $this->shipment = $this->getMockBuilder(Shipment::class)
                           ->setConstructorArgs([json_decode($response)])
-                          ->setMethods(['__construct']) 
+                          ->setMethods(['__construct'])
                           ->getMock();
     }
 }
