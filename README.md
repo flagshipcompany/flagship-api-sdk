@@ -12,6 +12,97 @@ composer require flagshipcompany/flagship-api-sdk : ^1.1
 composer update
 ```
 
+# Code Sample
+
+```
+<?php
+
+use \Flagship\Shipping\Flagship;
+use \Flagship\Shipping\Exceptions\QuoteException;
+
+require_once './vendor/autoload.php';
+
+$flagship = new Flagship('MY_ACCESS_TOKEN', 'https://api.smartship.io','MY_WEBSITE','API_VERSION');
+
+$payload = [
+    'from' =>[
+        "name"=> "FlagShip Courier Solutions",
+        "attn"=> "FCS",
+        "address"=> "Brunswick Blvd",
+        "suite"=> "148",
+        "city"=> "Pointe-Claire",
+        "country"=> "CA",
+        "state"=> "QC",
+        "postal_code"=> "H9R5P9",
+        "phone"=> "18663208383",
+        "ext"=> "",
+        "department"=> "Reception",
+        "is_commercial"=> true
+    ],
+    "to" => [
+        "name"=> "FlagShip Courier Solutions",
+        "attn"=> "FCS",
+        "address"=> "Brunswick Blvd",
+        "suite"=> "148",
+        "city"=> "Pointe-Claire",
+        "country"=> "CA",
+        "state"=> "QC",
+        "postal_code"=> "H9R5P9",
+        "phone"=> "18663208383",
+        "ext"=> "",
+        "department"=> "Reception",
+        "is_commercial"=> true
+    ],
+    "packages"=> [
+        "items"=> [
+            [
+                "width"=> 22,
+                "height"=> 22,
+                "length"=> 22,
+                "weight"=> 22,
+                "description"=> "Item description"
+            ],
+           
+        ],
+        "units"=> "imperial",
+        "type"=> "package",
+        "content"=> "goods"
+    ],
+    "payment"=> [
+        "payer"=> "F"
+    ],
+    "options"=> [
+        "insurance"=> [
+            "value"=> 123.45,
+            "description"=> "Children books"
+        ],
+        "cod"=> [
+            "method"=> "check",
+            "payable_to"=> "Bob",
+            "receiver_phone"=> "18663208383",
+            "amount"=> 123.45,
+            "currency"=> "CAD"
+        ],
+        "signature_required"=> false,
+        "saturday_delivery"=> false,
+        "shipping_date"=> "2019-07-11",
+        "reference"=> "123 test",
+        "driver_instructions"=> "Doorbell broken, knock on door",
+        "address_correction"=> true,
+        "return_documents_as"=> "url",
+        "shipment_tracking_emails"=> "jbeans@company.com;shipping1@company.com"
+    ]
+];
+
+try{
+    $rates = $flagship->createQuoteRequest($payload)->execute();
+}
+catch(QuoteException $e){
+    echo $e->getMessage();
+}
+
+```
+
 # Usage
 ```
 <?php
