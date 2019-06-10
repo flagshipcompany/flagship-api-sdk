@@ -17,8 +17,8 @@ composer update
 ```
 <?php
 
-use \Flagship\Shipping\Flagship;
-use \Flagship\Shipping\Exceptions\QuoteException;
+use Flagship\Shipping\Flagship;
+use Flagship\Shipping\Exceptions\QuoteException;
 
 require_once './vendor/autoload.php';
 
