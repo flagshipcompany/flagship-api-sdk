@@ -47,4 +47,8 @@ class Rate
     {
         return $this->rate->service->estimated_delivery_date;
     }
+    public function getCourierDescription() : string
+    {
+        return $this->rate->service->courier_desc;
+    }
 }
