@@ -5,7 +5,7 @@ use \PHPUnit\Framework\TestCase;
 use Flagship\Shipping\Objects\Rate;
 
 class RateTests extends TestCase{
-    
+
     public function testGetTotal(){
        $this->assertNotNull($this->rate->getTotal());
        $this->assertSame(64.78, $this->rate->getTotal());
@@ -41,6 +41,32 @@ class RateTests extends TestCase{
        $this->assertSame('2018-12-12 15:00', $this->rate->getDeliveryDate());
     }
 
+    public function testGetCourierName(){
+        $this->assertNotNull($this->rate->getCourierName());
+        $this->assertSame('UPS',$this->rate->getCourierName());
+    }
+
+    public function testGetTransitTime(){
+        $this->assertSame('1',$this->rate->getTransitTime());
+    }
+
+    public function testGetFlagshipCode(){
+        $this->assertNotNull($this->rate->getFlagshipCode());
+        $this->assertSame('expressAm',$this->rate->getFlagshipCode());
+    }
+
+    public function testGetBrokerage(){
+        $this->assertSame(null,$this->rate->getBrokerage());
+    }
+
+    public function testGetDebits(){
+        $this->assertSame(null,$this->rate->getDebits());
+    }
+
+    public function testGetAdjustments(){
+        $this->assertSame(null,$this->rate->getAdjustments());
+    }
+
     protected function setUp(){
         $response = '{
             "price": {
@@ -70,9 +96,9 @@ class RateTests extends TestCase{
 
         $this->rate = $this->getMockBuilder(Rate::class)
                           ->setConstructorArgs([json_decode($response)])
-                          ->setMethods(['__construct']) 
+                          ->setMethods(['__construct'])
                           ->getMock();
-      
+
     }
 
 }
