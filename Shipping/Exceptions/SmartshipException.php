@@ -13,13 +13,13 @@ class SmartshipException extends \Exception{
         }
 
         if(!$this->isJson($this->message)){
-
             $this->message = parent::getMessage();
             $errorsArray = [ $this->message ];
             return $errorsArray;
         }
 
         if(is_string($this->message) && is_array(json_decode($this->message,TRUE)) && count(json_decode($this->message,TRUE)) == 1){
+            $this->message = $this->removeArrayBracketsIfExist();
             $errorsArray = [$this->message];
             return $errorsArray;
         }
@@ -52,6 +52,10 @@ class SmartshipException extends \Exception{
         }
         return $errorsArray;
 
+    }
+
+    protected function removeArrayBracketsIfExist(){
+        return trim($this->message,'["]');
     }
 
     protected function normalizeErrors(array $error) : string {
