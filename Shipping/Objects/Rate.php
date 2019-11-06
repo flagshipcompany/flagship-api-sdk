@@ -63,7 +63,7 @@ class Rate
         return $taxes;
     }
 
-    public function getServiceCode() : int
+    public function getServiceCode() //Mixed return type
     {
         return $this->rate->service->courier_code;
     }
