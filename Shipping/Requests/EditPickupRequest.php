@@ -22,7 +22,8 @@ class EditPickupRequest extends ApiRequest{
     public function execute() : Pickup {
         try{
             $editPickupRequest = $this->api_request($this->url,$this->editPickupPayload,$this->token,'PUT',30,$this->flagshipFor,$this->version);
-            $editPickup = new Pickup($editPickupRequest["response"]->content);
+            $pickupObject = count((array)$editPickupRequest["response"]) == 0 ? new \stdClass() : $editPickupRequest["response"]->content;
+            $editPickup = new Pickup($pickupObject);
             $this->responseCode = $editPickupRequest["httpcode"];
             return $editPickup;
         }

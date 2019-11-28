@@ -5,6 +5,11 @@ Library to use FlagShip API
 # License: MIT
 Please go through the documentation at https://docs.smartship.io/ for all information about the API.
 
+# Requirements
+
+Composer
+PHP 7.1
+
 # Installation
 
 ```
@@ -62,7 +67,7 @@ $payload = [
                 "weight"=> 22,
                 "description"=> "Item description"
             ],
-           
+
         ],
         "units"=> "imperial",
         "type"=> "package",
@@ -76,16 +81,8 @@ $payload = [
             "value"=> 123.45,
             "description"=> "Children books"
         ],
-        "cod"=> [
-            "method"=> "check",
-            "payable_to"=> "Bob",
-            "receiver_phone"=> "18663208383",
-            "amount"=> 123.45,
-            "currency"=> "CAD"
-        ],
         "signature_required"=> false,
         "saturday_delivery"=> false,
-        "shipping_date"=> "2019-07-11",
         "reference"=> "123 test",
         "driver_instructions"=> "Doorbell broken, knock on door",
         "address_correction"=> true,

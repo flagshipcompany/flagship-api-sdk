@@ -37,6 +37,11 @@ class AvailableServicesRequest extends ApiRequest{
     }
 
     protected function createArrayOfServices($responseArray) : array {
+
+        if(count((array)$responseArray["response"]) == 0){
+            return [];
+        }
+
         $couriers = $responseArray["response"]->content;
 
         $couriers = get_object_vars($couriers);

@@ -19,7 +19,8 @@ class TrackShipmentRequest extends ApiRequest{
         try{
             $trackShipment = $this->api_request($this->url,[],$this->token,'GET',30,$this->flagshipFor,$this->version);
             $this->responseCode = $trackShipment["httpcode"];
-            return new TrackShipment($trackShipment["response"]->content);
+            $trackingObject = count((array)$trackShipment["response"]) == 0 ? new \stdClass() : $trackShipment["response"]->content ;
+            return new TrackShipment($trackingObject);
         }
         catch(ApiException $e){
             throw new TrackShipmentException($e->getMessage(),$e->getCode());

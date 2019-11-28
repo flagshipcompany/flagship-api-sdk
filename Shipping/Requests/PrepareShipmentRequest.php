@@ -18,10 +18,11 @@ class PrepareShipmentRequest extends ApiRequest{
         $this->version = $version;
     }
 
-    public function execute() : Shipment  {
+    public function execute() : ?Shipment  {
         try{
             $prepareShipmentRequest = $this->api_request($this->url,$this->payload,$this->token,'POST',30,$this->flagshipFor,$this->version);
-            $prepareShipment = new Shipment($prepareShipmentRequest["response"]->content);
+            $responseObject = count((array)$prepareShipmentRequest["response"]) == 0 ? new \stdClass() : $prepareShipmentRequest["response"]->content ;
+            $prepareShipment = new Shipment($responseObject);
             $this->responseCode = $prepareShipmentRequest["httpcode"];
             return $prepareShipment;
         }

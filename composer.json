@@ -5,7 +5,7 @@
     "keywords": ["flagship","api"],
     "homepage": "https://github.com/flagshipcompany/flagship-api-sdk",
     "license": "MIT",
-    "autoload": {        
+    "autoload": {
         "classmap":[
         	"."
         ]
@@ -14,7 +14,7 @@
         "phpunit/phpunit": "^6.5"
     },
     "require": {
-        "php": ">=7.1.0",
+        "php": "^7.1",
         "tightenco/collect": "^5.7"
     }
 }

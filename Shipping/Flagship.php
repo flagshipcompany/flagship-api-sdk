@@ -22,7 +22,7 @@ use Flagship\Shipping\objects\Rate;
 
 class Flagship{
 
-    public function __construct(string $apiToken, string $apiUrl, string $flagshipFor=null, string $version=null){
+    public function __construct(string $apiToken, string $apiUrl, string $flagshipFor='', string $version=''){
         $this->apiUrl = $apiUrl;
         $this->apiToken = $apiToken;
         $this->flagshipFor = $flagshipFor;

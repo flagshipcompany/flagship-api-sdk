@@ -13,17 +13,20 @@ class Rate
 
     public function getTotal() : float
     {
-        return $this->rate->price->total;
+        return property_exists($this->rate,'price') ? $this->rate->price->total : 0.00;
     }
 
     public function getSubtotal() : float
     {
-        return $this->rate->price->subtotal;
+        return property_exists($this->rate,'price') ? $this->rate->price->subtotal : 0.00;
     }
 
     public function getTaxesTotal() : float
     {
-        $total = 0;
+        $total = 0.00;
+        if(!property_exists($this->rate,'price')){
+            return 0.00;
+        }
         foreach ($this->rate->price->taxes as $key => $value) {
             $total += $value;
         }
@@ -32,22 +35,22 @@ class Rate
 
     public function getAdjustments() : ?string
     {
-        return $this->rate->price->adjustments;
+        return property_exists($this->rate,'price') ? $this->rate->price->adjustments : '';
     }
 
     public function getDebits() : ?string
     {
-        return $this->rate->price->debits;
+        return property_exists($this->rate,'price') ? $this->rate->price->debits : '';
     }
 
     public function getBrokerage() : ?string
     {
-        return $this->rate->price->brokerage;
+        return property_exists($this->rate,'price') ? $this->rate->price->brokerage : '';
     }
 
     public function getFlagshipCode() : string
     {
-        return $this->rate->service->flagship_code;
+        return property_exists($this->rate,'service') ? $this->rate->service->flagship_code : '';
     }
 
     public function getTransitTime() : string
@@ -57,6 +60,9 @@ class Rate
 
     public function getTaxesDetails() : array
     {
+        if(!property_exists($this->rate,'price')){
+            return [];
+        }
         foreach ($this->rate->price->taxes as $key => $value) {
             $taxes[$key] = $value;
         }
@@ -65,21 +71,21 @@ class Rate
 
     public function getServiceCode() //Mixed return type
     {
-        return $this->rate->service->courier_code;
+        return property_exists($this->rate,'service') ? $this->rate->service->courier_code : '';
     }
 
     public function getDeliveryDate() : string
     {
-        return $this->rate->service->estimated_delivery_date;
+        return property_exists($this->rate,'service') ? $this->rate->service->estimated_delivery_date : '';
     }
 
     public function getCourierDescription() : string
     {
-        return $this->rate->service->courier_desc;
+        return property_exists($this->rate,'service') ? $this->rate->service->courier_desc : '';
     }
 
     public function getCourierName() : string
     {
-        return $this->rate->service->courier_name;
+        return property_exists($this->rate,'service') ? $this->rate->service->courier_name : '';
     }
 }

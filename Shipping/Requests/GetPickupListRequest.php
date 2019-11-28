@@ -27,8 +27,9 @@ class GetPickupListRequest extends ApiRequest{
     public function execute() : GetPickupListCollection {
         try{
             $getPickupListRequest = $this->api_request($this->url,[],$this->token,'GET',10,$this->flagshipFor,$this->version);
+            $getPickupListRecords = count((array)$getPickupListRequest["response"]) == 0 ? [] : $getPickupListRequest["response"]->content->records;
             $pickupList = new GetPickupListCollection();
-            $pickupList->importPickups($getPickupListRequest["response"]->content->records);
+            $pickupList->importPickups($getPickupListRecords);
             $this->responseCode = $getPickupListRequest["httpcode"];
             return $pickupList;
         }

@@ -20,7 +20,8 @@ class GetShipmentByIdRequest extends ApiRequest{
     public function execute() : Shipment {
         try{
             $response = $this->api_request($this->url,[],$this->token,"GET",10,$this->flagshipFor,$this->version);
-            $shipment = new Shipment($response["response"]->content);
+            $responseObject = count((array)$response["response"]) == 0 ? new \stdClass() : $response["response"]->content;
+            $shipment = new Shipment($responseObject);
             $this->responseCode = $response["httpcode"];
             return $shipment;
         } catch(ApiException $e){

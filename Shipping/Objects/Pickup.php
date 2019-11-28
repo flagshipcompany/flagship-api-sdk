@@ -2,7 +2,7 @@
 namespace Flagship\Shipping\Objects;
 
 class Pickup{
-    
+
     public function __construct(\stdClass $pickup){
         $this->pickup = $pickup;
     }
@@ -11,74 +11,74 @@ class Pickup{
         return $this->pickup->id;
     }
 
-    public function getConfirmation() : string {
-        return $this->pickup->confirmation;
+    public function getConfirmation() : ?string {
+        return property_exists($this->pickup,'confirmation') ? $this->pickup->confirmation : NULL ;
     }
 
     public function getFullAddress() : array {
-        $address = json_decode(json_encode($this->pickup->address),TRUE);
+        $address = property_exists($this->pickup,'address') ? json_decode(json_encode($this->pickup->address),TRUE) : [];
         return $address;
     }
 
     public function getAddress() : string {
-        return $this->pickup->address->address;
+        return property_exists($this->pickup,'address') ? $this->pickup->address->address : '' ;
     }
 
     public function getCompany() : string {
-        return $this->pickup->address->name;
+        return property_exists($this->pickup,'address') ? $this->pickup->address->name : '';
     }
 
     public function getName() : string {
-        return $this->pickup->address->attn;
+        return property_exists($this->pickup,'address') ? $this->pickup->address->attn : '';
     }
 
-    public function getSuite() : ?string {
-        return is_null($this->pickup->address->suite) ? NULL : $this->pickup->address->suite;
+    public function getSuite() : string {
+        return  property_exists($this->pickup,'address') ? (is_null($this->pickup->address->suite) ? '' : $this->pickup->address->suite) : '';
     }
 
     public function getCity() : string {
-        return $this->pickup->address->city;
+        return property_exists($this->pickup,'address') ? $this->pickup->address->city : '';
     }
 
     public function getCountry() : string {
-        return $this->pickup->address->country;
+        return property_exists($this->pickup,'address') ? $this->pickup->address->country : '';
     }
 
     public function getState() : string {
-        return $this->pickup->address->state;
+        return property_exists($this->pickup,'address') ? $this->pickup->address->state : '';
     }
 
     public function getPostalCode() : string {
-        return $this->pickup->address->postal_code;
+        return property_exists($this->pickup,'address') ? $this->pickup->address->postal_code : '';
     }
     public function getPhone() : string {
-        return $this->pickup->address->phone;
+        return property_exists($this->pickup,'address') ? $this->pickup->address->phone : '';
     }
-    public function getPhoneExt() : ?string {
-        return is_null($this->pickup->address->ext) ? NULL : $this->pickup->address->ext;
+    public function getPhoneExt() : string {
+        return property_exists($this->pickup,'address') ? (is_null($this->pickup->address->ext) ? '' : $this->pickup->address->ext) : '';
     }
 
-    public function isAddressCommercial() : bool {
-        return $this->pickup->address->is_commercial ? TRUE : FALSE;
+    public function isAddressCommercial() : ?bool {
+        return property_exists($this->pickup,'address') ? ($this->pickup->address->is_commercial ? TRUE : FALSE) : NULL;
     }
 
     public function getCourier() : string {
-        return $this->pickup->courier;
+        return property_exists($this->pickup,'courier') ? $this->pickup->courier : '';
     }
 
     public function getUnits() : string {
-        return $this->pickup->units;
+        return property_exists($this->pickup,'units') ? $this->pickup->units : '';
     }
 
     public function getBoxes() : string {
-        return $this->pickup->boxes;
+        return property_exists($this->pickup,'boxes') ? $this->pickup->boxes : '';
     }
 
-    public function getWeight() : string {
+    public function getWeight() : ?string {
         return $this->pickup->weight;
     }
 
-    public function getPickupLocation() : string {
+    public function getPickupLocation() : ?string {
         return $this->pickup->location;
     }
 

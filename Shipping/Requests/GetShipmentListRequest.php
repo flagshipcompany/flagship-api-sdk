@@ -31,8 +31,9 @@ class GetShipmentListRequest extends ApiRequest{
     public function execute() : GetShipmentListCollection {
         try{
             $request = $this->api_request($this->url,[],$this->token,"GET",30,$this->flagshipFor,$this->version);
+            $shipmentRecords = count((array)$request["response"]) == 0 ? [] : $request["response"]->content->records;
             $shipments = new GetShipmentListCollection();
-            $shipments->importShipments($request["response"]->content->records);
+            $shipments->importShipments($shipmentRecords);
             $this->responseCode = $request["httpcode"];
             return $shipments;
         }

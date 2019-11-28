@@ -20,7 +20,10 @@ class ConfirmShipmentRequest extends ApiRequest{
     public function execute() : Shipment {
         try{
             $confirmShipmentRequest = $this->api_request($this->url,$this->payload,$this->token,'POST',30,$this->flagshipFor,$this->version);
-            $confirmShipment = new Shipment($confirmShipmentRequest["response"]->content);
+
+            $confirmShipmentObject = count((array)$confirmShipmentRequest["response"]) == 0 ? new \stdClass() : $confirmShipmentRequest["response"]->content;
+
+            $confirmShipment = new Shipment($confirmShipmentObject);
             $this->responseCode = $confirmShipmentRequest["httpcode"];
             return $confirmShipment;
         }

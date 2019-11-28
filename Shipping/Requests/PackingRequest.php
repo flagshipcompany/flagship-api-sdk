@@ -20,10 +20,10 @@ class PackingRequest extends ApiRequest{
     public function execute() : PackingCollection {
         try{
             $packingRequest = $this->api_request($this->url,$this->payload,$this->token,'POST',30,$this->flagshipFor,$this->version);
-
+            $packagingObject = count((array)$packingRequest["response"]) == 0 ? [] : $packingRequest["response"]->content->packages;
             $packages = new PackingCollection();
 
-            $packages->importPackages($packingRequest["response"]->content->packages);
+            $packages->importPackages($packagingObject);
             $this->responseCode = $packingRequest["httpcode"];
             return $packages;
         }

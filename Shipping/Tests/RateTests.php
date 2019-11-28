@@ -33,7 +33,7 @@ class RateTests extends TestCase{
 
     public function testGetServiceCode(){
        $this->assertNotNull($this->rate->getServiceCode());
-       $this->assertSame(65, $this->rate->getServiceCode());
+       $this->assertSame('65', $this->rate->getServiceCode());
     }
 
     public function testGetDeliveryDate(){
