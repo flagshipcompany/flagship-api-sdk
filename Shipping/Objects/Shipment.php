@@ -1,7 +1,7 @@
 <?php
 
 namespace Flagship\Shipping\Objects;
-use Flagship\Shipping\Traits\ConfirmShipmentTrait;
+
 use Flagship\Shipping\Objects\Package;
 
 

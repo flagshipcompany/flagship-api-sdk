@@ -18,7 +18,23 @@ use Flagship\Shipping\Requests\TrackShipmentRequest;
 use Flagship\Shipping\Requests\GetPickupListRequest;
 use Flagship\Shipping\Requests\PackingRequest;
 use Flagship\Shipping\Requests\GetShipmentByIdRequest;
+use Flagship\Shipping\Requests\GetDhlEcommRatesRequest;
+use Flagship\Shipping\Requests\CreateManifestRequest;
+use Flagship\Shipping\Requests\AssociateShipmentRequest;
+use Flagship\Shipping\Requests\GetManifestByIdRequest;
+use Flagship\Shipping\Requests\AssociateToDepotRequest;
+use Flagship\Shipping\Requests\GetManifestsListRequest;
+use Flagship\Shipping\Requests\CancelManifestByIdRequest;
+use Flagship\Shipping\Requests\ConfirmManifestByIdRequest;
+use Flagship\Shipping\Requests\GetDhlEcommOpenShipmentsRequest;
 use Flagship\Shipping\objects\Rate;
+use Flagship\Shipping\Objects\Manifest;
+use Flagship\Shipping\Exceptions\CreateManifestException;
+use Flagship\Shipping\Exceptions\AssociateShipmentException;
+use Flagship\Shipping\Exceptions\CreateDepotShipmentException;
+use Flagship\Shipping\Exceptions\AssociateToDepotException;
+use Flagship\Shipping\Exceptions\ConfirmManifestByIdException;
+use Flagship\Shipping\Exceptions\GetManifestByIdException;
 
 class Flagship{
 
@@ -33,6 +49,90 @@ class Flagship{
         $availableServicesRequest = new AvailableServicesRequest($this->apiToken,$this->apiUrl,$this->flagshipFor,$this->version);
         return $availableServicesRequest;
     }
+
+    /* DHL Ecomm Requests start */
+    public function getDhlEcommRatesRequest(array $payload) : GetDhlEcommRatesRequest {
+        $dhlEcommRatesRequest = new GetDhlEcommRatesRequest($this->apiToken,$this->apiUrl,$payload,$this->flagshipFor,$this->version);
+        return $dhlEcommRatesRequest;
+    }
+
+    public function createManifestRequest(array $payload) : CreateManifestRequest {
+        $createManifestRequest = new CreateManifestRequest($this->apiToken,$this->apiUrl,$payload,$this->flagshipFor,$this->version);
+        return $createManifestRequest;
+    }
+
+    public function associateShipmentRequest(int $manifestId, array $payload) : AssociateShipmentRequest {
+        $associateShipmentRequest = new AssociateShipmentRequest($this->apiToken,$this->apiUrl,$manifestId,$payload,$this->flagshipFor,$this->version);
+        return $associateShipmentRequest;
+
+    }
+
+    public function createDepotShipmentRequest(array $payload) : ConfirmShipmentRequest {
+        $depotShipmentRequest =  $this->confirmShipmentRequest($payload);
+        return $depotShipmentRequest;
+    }
+
+    public function getManifestByIdRequest(int $manifestId) : GetManifestByIdRequest {
+        $getManifestByIdRequest = new GetManifestByIdRequest($this->apiToken, $this->apiUrl,$manifestId,$this->flagshipFor,$this->version);
+        return $getManifestByIdRequest;
+    }
+
+    public function associateToDepotRequest(int $manifestId, array $payload) : AssociateToDepotRequest {
+        $associateToDepotRequest = new AssociateToDepotRequest($this->apiToken,$this->apiUrl,$manifestId,$payload,$this->flagshipFor,$this->version);
+        return $associateToDepotRequest;
+    }
+
+    public function getManifestsListRequest() : GetManifestsListRequest {
+        $manifestsListRequest = new GetManifestsListRequest($this->apiToken,$this->apiUrl,$this->flagshipFor,$this->version);
+        return $manifestsListRequest;
+    }
+
+    public function cancelManifestByIdRequest(int $manifestId) : CancelManifestByIdRequest {
+        $cancelManifestByIdRequest = new CancelManifestByIdRequest($this->apiToken,$this->apiUrl,$manifestId,$this->flagshipFor,$this->version);
+        return $cancelManifestByIdRequest;
+    }
+
+    public function confirmManifestbyIdRequest(int $manifestId) : ConfirmManifestByIdRequest {
+        $confirmManifestbyIdRequest = new ConfirmManifestByIdRequest($this->apiToken,$this->apiUrl,$manifestId,$this->flagshipFor,$this->version);
+        return $confirmManifestbyIdRequest;
+    }
+
+    public function getDhlEcommOpenShipmentsRequest() : GetDhlEcommOpenShipmentsRequest {
+        $dhlEcommOpenShipmentsRequest = new GetDhlEcommOpenShipmentsRequest($this->apiToken,$this->apiUrl,$this->flagshipFor,$this->version);
+        return $dhlEcommOpenShipmentsRequest;
+    }
+
+    public function createCompleteDhlEcommShipment(array $confirmedShipmentIds,string $manifestName,array $depotPayload) : Manifest {
+        try{
+            $manifestPayload = [ "name" => $manifestName ];
+            $associateShipmentPayload = [ "shipment_ids" => $confirmedShipmentIds ];
+
+            $manifestId = $this->createManifestRequest($manifestPayload)->execute()->getId();
+            $associateShipment = $this->associateShipmentRequest($manifestId,$associateShipmentPayload)->execute();
+            if($associateShipment === TRUE){
+               $depotShipment = $this->createDepotShipmentRequest($depotPayload)->execute();   
+               $associateToDepotPayload = ["shipment_id" => $depotShipment->getId() ];
+               $this->associateToDepotRequest($manifestId,$associateToDepotPayload)->execute();
+               $this->confirmManifestbyIdRequest($manifestId)->execute(); 
+            }
+            $manifest = $this->getManifestByIdRequest($manifestId)->execute();
+            return $manifest;
+        } catch(CreateManifestException $e){
+            echo $e->getMessage();
+        } catch(AssociateShipmentException $e){
+            echo $e->getMessage();
+        } catch(CreateDepotShipmentException $e){
+            echo $e->getMessage();
+        } catch(AssociateToDepotException $e){
+            echo $e->getMessage();
+        } catch(ConfirmManifestByIdException $e){
+            echo $e->getMessage();
+        } catch(GetManifestByIdException $e){
+            echo $e->getMessage();
+        }
+    }
+
+    /* DHL Ecomm Requests end */
 
     public function validateTokenRequest(string $token) : ValidateTokenRequest {
         $validateTokenRequest = new ValidateTokenRequest($this->apiUrl,$token,$this->flagshipFor,$this->version);

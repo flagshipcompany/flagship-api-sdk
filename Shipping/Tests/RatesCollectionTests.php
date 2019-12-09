@@ -8,8 +8,7 @@ use Flagship\Shipping\Exceptions\QuoteException;
 
 class RatesCollectionTest extends TestCase{
 
-    public function testGetCheapest(){
-        
+    public function testGetCheapest(){ 
         $this->assertNotEmpty($this->ratesCollection->getCheapest());
         $this->assertNotNull($this->ratesCollection->getCheapest());
         $this->assertInstanceOf(Rate::class, $this->ratesCollection->getCheapest());
@@ -17,7 +16,6 @@ class RatesCollectionTest extends TestCase{
     }
 
     public function testGetFastest(){
-
         $this->assertNotEmpty($this->ratesCollection->getFastest());
         $this->assertNotNull($this->ratesCollection->getFastest());
         $this->assertInstanceOf(Rate::class, $this->ratesCollection->getFastest());
@@ -25,7 +23,6 @@ class RatesCollectionTest extends TestCase{
     }
 
     public function testGetByCourier(){
-    
         $this->assertNotNull($this->ratesCollection->getByCourier('ups'));
         $this->assertInstanceOf(RatesCollection::class, $this->ratesCollection->getByCourier('ups'));
         $this->assertSame(59.93, $this->ratesCollection->getByCourier('ups')->getCheapest()->rate->price->total);
@@ -33,28 +30,24 @@ class RatesCollectionTest extends TestCase{
     }
 
     public function testSortByPrice(){
-        
-            $this->assertNotNull($this->ratesCollection->sortByPrice());
-            $this->assertInstanceOf(RatesCollection::class, $this->ratesCollection->sortByPrice());
-            $this->assertSame(59.93, $this->ratesCollection->sortByPrice()->first()->rate->price->total);
-            $this->assertSame(131.51, $this->ratesCollection->sortByPrice()->last()->rate->price->total);
+        $this->assertNotNull($this->ratesCollection->sortByPrice());
+        $this->assertInstanceOf(RatesCollection::class, $this->ratesCollection->sortByPrice());
+        $this->assertSame(59.93, $this->ratesCollection->sortByPrice()->first()->rate->price->total);
+        $this->assertSame(131.51, $this->ratesCollection->sortByPrice()->last()->rate->price->total);
     }
 
     public function testSortByTime(){
-        
-            $this->assertNotNull($this->ratesCollection->sortByTime());
-            $this->assertInstanceOf(RatesCollection::class, $this->ratesCollection->sortByTime());
-            $this->assertSame(131.51, $this->ratesCollection->sortByTime()->first()->rate->price->total);
-            $this->assertSame(59.93, $this->ratesCollection->sortByTime()->last()->rate->price->total);
+        $this->assertNotNull($this->ratesCollection->sortByTime());
+        $this->assertInstanceOf(RatesCollection::class, $this->ratesCollection->sortByTime());
+        $this->assertSame(131.51, $this->ratesCollection->sortByTime()->first()->rate->price->total);
+        $this->assertSame(59.93, $this->ratesCollection->sortByTime()->last()->rate->price->total);
     }
 
-     public function testGetByCourierForException(){
+    public function testGetByCourierForException(){
 
         $this->expectException(QuoteException::class);
         $this->ratesCollection->getByCourier('fedex');
-
     }
-
 
     protected function setUp(){
         $response = '[
@@ -135,8 +128,7 @@ class RatesCollectionTest extends TestCase{
                }
             ]';
 
-    $this->ratesCollection = new RatesCollection();
-    $this->ratesCollection->importRates(json_decode($response));
-
+        $this->ratesCollection = new RatesCollection();
+        $this->ratesCollection->importRates(json_decode($response));
     }
 }

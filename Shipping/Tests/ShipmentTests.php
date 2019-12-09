@@ -63,12 +63,12 @@ class ShipmentTests extends TestCase{
 
     public function testGetLabel(){
        $this->assertNotNull($this->shipment->getLabel());
-       $this->assertSame("http://127.0.0.1:3002/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=reg", $this->shipment->getLabel());
+       $this->assertSame("https://flagshipcompany.com/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=reg", $this->shipment->getLabel());
     }
 
     public function testGetThermalLabel(){
        $this->assertNotNull($this->shipment->getThermalLabel());
-       $this->assertSame("http://127.0.0.1:3002/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=therm", $this->shipment->getThermalLabel());
+       $this->assertSame("https://flagshipcompany.com/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=therm", $this->shipment->getThermalLabel());
     }
 
     public function testGetCommercialInvoice(){
@@ -264,8 +264,8 @@ class ShipmentTests extends TestCase{
                 },
                 "brokerage_details": null,
                 "documents": {
-                    "regular_label": "http://127.0.0.1:3002/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=reg",
-                    "thermal_label": "http://127.0.0.1:3002/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=therm"
+                    "regular_label": "https://flagshipcompany.com/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=reg",
+                    "thermal_label": "https://flagshipcompany.com/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=therm"
                 },
                 "transit_details": [
                     {

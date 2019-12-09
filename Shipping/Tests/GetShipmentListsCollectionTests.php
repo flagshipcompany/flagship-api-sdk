@@ -14,16 +14,13 @@ class GetShipmentListsCollectionTests extends TestCase{
         $this->assertSame('18663208383', $this->shipmentsCollection->getById(2950191)->shipment->from->phone);
     }
 
-    public function testGetByTrackingNumber(){
-         
+    public function testGetByTrackingNumber(){  
         $this->assertNotNull($this->shipmentsCollection->getByTrackingNumber('329022023355'));
         $this->assertInstanceOf(Shipment::class , $this->shipmentsCollection->getByTrackingNumber('329022023355'));
         $this->assertSame('6749 Dennett Pl', $this->shipmentsCollection->getByTrackingNumber('329022023355')->shipment->to->address);
     }
 
-
     public function testGetByStatus(){
-        
         $this->assertNotNull($this->shipmentsCollection->getByStatus('dispatched'));
         $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByStatus('dispatched'));
         $this->assertSame('FlagShip Courier Solutions', $this->shipmentsCollection->getByStatus('DiSPAtchEd')->nth(6)->first()->shipment->from->name);
@@ -32,9 +29,7 @@ class GetShipmentListsCollectionTests extends TestCase{
     public function testGetByPickupId(){
         $this->assertNotNull($this->shipmentsCollection->getByPickupId('76764464'));
         $this->assertInstanceOf(Shipment::class , $this->shipmentsCollection->getByPickupId('76764464'));
-        
         $this->assertSame(2950191, $this->shipmentsCollection->getByPickupId('76764464')->shipment->id);
-
     }
 
     public function testGetBySender(){
@@ -44,35 +39,30 @@ class GetShipmentListsCollectionTests extends TestCase{
     }
 
     public function testGetByRecevier(){
-
         $this->assertNotNull($this->shipmentsCollection->getByReceiver('Corey Leonard'));
         $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByReceiver('Corey Leonard'));
         $this->assertSame('Contac', $this->shipmentsCollection->getByReceiver('Corey Leonard')->last()->shipment->to->name);
     }
 
     public function testGetByReference(){
-    
         $this->assertNotNull($this->shipmentsCollection->getByReference('Shipment reference here'));
         $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByReference('Shipment reference here'));
         $this->assertSame('ups', $this->shipmentsCollection->getByReference('Shipment reference here')->first()->shipment->service->courier_name);
     }
 
     public function testGetByDate(){
-         
         $this->assertNotNull($this->shipmentsCollection->getByDate('2018-10-22'));
         $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByDate('2018-10-22'));
         $this->assertSame(true, $this->shipmentsCollection->getByDate('2018-10-22')->last()->shipment->to->is_commercial);
     }
 
     public function testGetByCourier(){
-         
         $this->assertNotNull($this->shipmentsCollection->getByCourier('ups'));
         $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByCourier('ups'));
         $this->assertSame('2018-10-29', $this->shipmentsCollection->getByCourier('purolator')->first()->shipment->options->shipping_date);
     }
 
     public function testGetBySenderPhone(){
-         
         $this->assertNotNull($this->shipmentsCollection->getBySenderPhone('5147390202'));
         $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getBySenderPhone('5147390202'));
         $this->assertSame('Flagship Courier Solutions', $this->shipmentsCollection->getBySenderPhone('5147390202')->first()->shipment->from->name);
@@ -91,15 +81,12 @@ class GetShipmentListsCollectionTests extends TestCase{
     }
 
     public function testGetByRecevierCompany(){
-    
         $this->assertNotNull($this->shipmentsCollection->getByReceiverCompany('Flagship Courier Solutions'));
         $this->assertInstanceOf(GetShipmentListCollection::class , $this->shipmentsCollection->getByReceiverCompany('Flagship Courier Solutions'));
         $this->assertSame('SAINT-LAURENT', $this->shipmentsCollection->getByReceiverCompany('Flagship Courier Solutions')->first()->shipment->to->city);
     }
 
     public function testGetByIdForException(){
-
-      
         $this->expectException(GetShipmentListException::class);
         $this->shipmentsCollection->getById(6476476);
         
@@ -116,7 +103,6 @@ class GetShipmentListsCollectionTests extends TestCase{
     }
 
     public function testGetByPickupIdForException(){
-    
         $this->expectException(GetShipmentListException::class);
         $this->shipmentsCollection->getByPickupId(7628746);
     }
@@ -127,13 +113,11 @@ class GetShipmentListsCollectionTests extends TestCase{
     }
 
     public function testGetByRecevierForException(){
-    
         $this->expectException(GetShipmentListException :: class);
         $this->shipmentsCollection->getByReceiver('WoocomMerce');
     }
 
     public function testGetByReferenceForException(){
-      
         $this->expectException(GetShipmentListException::class);
         $this->shipmentsCollection->getByReference('Shipment Reference');
     }
@@ -144,20 +128,17 @@ class GetShipmentListsCollectionTests extends TestCase{
     }
 
     public function testGetByCourierForException(){
-      
         $this->expectException(GetShipmentListException::class);
         $this->shipmentsCollection->getByCourier('upsss');
     }
 
     public function testGetBySenderPhoneForException(){
-
         $this->expectException(GetShipmentListException::class);
         $this->shipmentsCollection->getBySenderPhone(65656746747);
 
     }
 
     public function testGetByReceiverPhoneForException(){
-    
         $this->expectException(GetShipmentListException::class);
         $this->shipmentsCollection->getByReceiverPhone(87396966567);
     }
@@ -168,7 +149,6 @@ class GetShipmentListsCollectionTests extends TestCase{
     }
 
     public function testGetByReceiverCompanyForException(){
-      
         $this->expectException(GetShipmentListException::class);
         $this->shipmentsCollection->getByReceiverCompany('Some Other Company');
     }
@@ -257,8 +237,8 @@ class GetShipmentListsCollectionTests extends TestCase{
                 },
                 "brokerage_details": null,
                 "documents": {
-                    "regular_label": "http://127.0.0.1:3002/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=reg",
-                    "thermal_label": "http://127.0.0.1:3002/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=therm"
+                    "regular_label": "https://flagshipcompany.com/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=reg",
+                    "thermal_label": "https://flagshipcompany.com/ship/2950191/labels/b673d46530c04b0920f9b3d3f800c6c247be5232?document=therm"
                 },
                 "transit_details": [
                     {
@@ -499,8 +479,8 @@ class GetShipmentListsCollectionTests extends TestCase{
                 },
                 "brokerage_details": null,
                 "documents": {
-                    "regular_label": "http://127.0.0.1:3002/ship/2950186/labels/8dc9660587bb3534379ce699a9722d435e4ffd3f?document=reg",
-                    "thermal_label": "http://127.0.0.1:3002/ship/2950186/labels/8dc9660587bb3534379ce699a9722d435e4ffd3f?document=therm"
+                    "regular_label": "https://flagshipcompany.com/ship/2950186/labels/8dc9660587bb3534379ce699a9722d435e4ffd3f?document=reg",
+                    "thermal_label": "https://flagshipcompany.com/ship/2950186/labels/8dc9660587bb3534379ce699a9722d435e4ffd3f?document=therm"
                 },
                 "transit_details": [
                     {
@@ -582,9 +562,9 @@ class GetShipmentListsCollectionTests extends TestCase{
                 },
                 "brokerage_details": null,
                 "documents": {
-                    "regular_label": "http://127.0.0.1:3002/ship/2950185/labels/8a5e9f19b93f299a6dc9e05f96502152af558ac1?document=reg",
-                    "thermal_label": "http://127.0.0.1:3002/ship/2950185/labels/8a5e9f19b93f299a6dc9e05f96502152af558ac1?document=therm",
-                    "commercial_invoice": "http://127.0.0.1:3002/ship/2950185/labels/8a5e9f19b93f299a6dc9e05f96502152af558ac1?document=statement"
+                    "regular_label": "https://flagshipcompany.com/ship/2950185/labels/8a5e9f19b93f299a6dc9e05f96502152af558ac1?document=reg",
+                    "thermal_label": "https://flagshipcompany.com/ship/2950185/labels/8a5e9f19b93f299a6dc9e05f96502152af558ac1?document=therm",
+                    "commercial_invoice": "https://flagshipcompany.com/ship/2950185/labels/8a5e9f19b93f299a6dc9e05f96502152af558ac1?document=statement"
                 },
                 "transit_details": [
                     {
@@ -691,8 +671,8 @@ class GetShipmentListsCollectionTests extends TestCase{
                 },
                 "brokerage_details": null,
                 "documents": {
-                    "regular_label": "http://127.0.0.1:3002/ship/2950182/labels/430390e9cfbf32d3c9156ae82354940145b8d078?document=reg",
-                    "thermal_label": "http://127.0.0.1:3002/ship/2950182/labels/430390e9cfbf32d3c9156ae82354940145b8d078?document=therm"
+                    "regular_label": "https://flagshipcompany.com/ship/2950182/labels/430390e9cfbf32d3c9156ae82354940145b8d078?document=reg",
+                    "thermal_label": "https://flagshipcompany.com/ship/2950182/labels/430390e9cfbf32d3c9156ae82354940145b8d078?document=therm"
                 },
                 "transit_details": [
                     {

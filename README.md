@@ -121,10 +121,10 @@ try{
 
     $request = $flagship->prepareShipmentRequest([
 
-  'from'=>[ ... ],
-  'to' => [ ... ],
-  'packages' => [ ... ],
-   ...  
+        'from'=>[ ... ],
+        'to' => [ ... ],
+        'packages' => [ ... ],
+        ...  
   ]);
 
   $response = $request->execute();
@@ -138,10 +138,10 @@ try{
 
     $request = $flagship->createQuoteRequest([
 
-  'from'=>[ ... ],
-  'to' => [ ... ],
-  'packages' => [ ... ],
-   ...  
+      'from'=>[ ... ],
+      'to' => [ ... ],
+      'packages' => [ ... ],
+      ...  
   ]);
 
   $rates = $request->execute(); //returns a collection of rates
@@ -160,11 +160,11 @@ try{
 
     $request = $flagship->confirmShipmentRequest([
 
-  'from'=>[ ... ],
-  'to' => [ ... ],
-  'packages' => [ ... ],
-   ...  
-  ]);
+      'from'=>[ ... ],
+      'to' => [ ... ],
+      'packages' => [ ... ],
+       ...  
+    ]);
 
   $confirmedShipment = $request->execute(); //returns a collection of rates
   $confirmedShipment->getLabel(); //returns regular label
@@ -175,5 +175,128 @@ try{
 catch(ConfirmShipmentException $e){
     echo $e->getMessage()."\n";
 }
+
+try{
+
+    //get DHL Ecommerce rates
+
+    $payload = [
+        "from"=> [
+            "name"=> "Flagship Courier Solutions",
+            "attn"=> "Reception",
+            "address"=> "148 Brunswick",
+            "suite"=> null,
+            "department"=> " ",
+            "country"=> "CA",
+            "postal_code"=> "H9R 5P9",
+            "city"=> "Pointe-Claire",
+            "state"=> "QC",
+            "phone"=> "5147390202",
+            "ext"=> null,
+            "is_commercial"=> true
+        ],
+        "to"=> [
+            "name"=> "INRA",
+            "attn"=> "Marie Martin",
+            "address"=> "14 rue Girardet",
+            "suite"=> null,
+            "department"=> " ",
+            "country"=> "FR",
+            "postal_code"=> "54042",
+            "city"=> "Nancy",
+            "state"=> null,
+            "phone"=> "383396892",
+            "ext"=> null,
+            "is_commercial"=> true
+        ],
+        "options"=> [
+            "signature_required"=> false,
+            "reference"=> null,
+            "driver_instructions"=> null,
+            "return_documents_as"=> "url",
+            "address_correction"=> false,
+            "shipment_tracking_emails"=> null,
+            "insurance"=> [
+                "value"=> 1200,
+                "description"=> "Battle-ready saber"
+            ]
+        ],
+        "payment"=> [
+            "payer"=> "F"
+        ],
+        "accounts"=> [],
+        "packages"=> [
+            "units"=> "metric",
+            "type"=> "package",
+            "content"=> "goods",
+            "items"=> [
+                [
+                    "width"=> "18",
+                    "height"=> "18",
+                    "length"=> "18",
+                    "weight"=> "360",
+                    "description"=> "Very nicely packed thing"
+                ]
+            ]
+        ]
+    ];
+
+    $dhlEcommRates = $flagship->getDhlEcommRatesRequest($payload)->execute();
+} catch(GetDhlEcommRatesException $e){
+    echo $e->getMessage();
+}
+
+//Prepare Complete DHL Ecommerce Shipment
+
+    $depotPayload = $depotPayload = [
+                    "from"=> [
+                        "name"=> "Flagship Courier Solutions",
+                        "attn"=> "Reception",
+                        "address"=> "Brunswick Boulevard",
+                        "suite"=> "148",
+                        "city"=> "Pointe-Claire",
+                        "country"=> "CA",
+                        "state"=> "QC",
+                        "postal_code"=> "H9R5P9",
+                        "phone"=> "514-739-0202"
+                    ],
+                    "to"=> [
+                        "is_commercial"=> true,
+                        "name"=> "DHL eCommerce",
+                        "attn"=> "DHL eCommerce",
+                        "address"=> "4-355 Admiral Blvd.",
+                        "city"=> "Mississauga",
+                        "country"=> "CA",
+                        "state"=> "ON",
+                        "postal_code"=> "L5T 2N1",
+                        "phone"=> "647-588-7155"
+                    ],
+                    "packages"=> [
+                        "units"=> "metric",
+                        "type"=> "package",
+                        "items"=> [
+                            [
+                                "width"=> "31",
+                                "height"=> "31",
+                                "length"=> "31",
+                                "weight"=> "1",
+                                "description"=> "Very nicely packed thing"
+                            ]
+                        ]
+                    ],
+                    "service"=> [
+                        "courier_name"=> "ups",
+                        "courier_code"=> 65
+                    ]
+                ];
+
+
+    $confirmShipmentIds = [];
+
+    $confirmShipmentIds[] = $flagship->confirmShipmentRequest($confirmShipmentPayload1)->execute()->getId();
+    $confirmShipmentIds[] = $flagship->confirmShipmentRequest($confirmShipmentPayload2)->execute()->getId();
+
+    $completeDhlEcommShipment = $flagship->createCompleteDhlEcommShipment($confirmShipmenIds,"MyNewManifest",$depotPayload);
+
 
 ```
