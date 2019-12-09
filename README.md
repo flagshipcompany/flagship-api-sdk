@@ -110,6 +110,7 @@ use Flagship\Shipping\Flagship;
 use Flagship\Shipping\Exceptions\PrepareShipmentException;
 use Flagship\Shipping\Exceptions\QuoteException;
 use Flagship\Shipping\Exceptions\ConfirmShipmentException;
+use Flagship\Shipping\Exceptions\GetDhlEcommRatesException;
 
 /*
  * MY_WEBSITE and API_VERSION are optional parameters
