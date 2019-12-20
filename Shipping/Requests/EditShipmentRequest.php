@@ -21,7 +21,7 @@ class EditShipmentRequest extends Apirequest{
     public function execute() : Shipment {
         try{
             $editShipmentRequest = $this->api_request($this->url,$this->payload,$this->token,'PUT',30,$this->flagshipFor,$this->version);
-            $editShipmentObject = count((array)$editPickupRequest["response"]) == 0 ? new \stdClass() : $editShipmentRequest["response"]->content;
+            $editShipmentObject = count((array)$editShipmentRequest["response"]) == 0 ? new \stdClass() : $editShipmentRequest["response"]->content;
             $editShipment = new Shipment($editShipmentObject);
             $this->responseCode = $editShipmentRequest["httpcode"];
             return $editShipment;
