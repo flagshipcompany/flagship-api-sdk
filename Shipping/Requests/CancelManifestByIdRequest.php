@@ -26,7 +26,7 @@ class CancelManifestByIdRequest extends ApiRequest{
 
     public function getResponseCode() : ?int {
         if(isset($this->responseCode)){
-            return $this->responseCode
+            return $this->responseCode;
         }
         return NULL;
     }
