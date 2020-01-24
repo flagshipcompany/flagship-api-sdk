@@ -6,10 +6,27 @@ use Flagship\Shipping\Exceptions\FilterException;
 
 abstract class ApiRequest{
 
-    protected function api_request(string $url,array $json,string $apiToken,string $method, int $timeout, string $flagshipFor=null, string $version=null) : array
+    public function setStoreName(string $storeName){
+        $this->setHeader("X-Store-Name",$storeName);
+        return $this;
+    }
+    public function setOrderId(int $orderId){
+        $this->setHeader("X-Order-Id",$orderId);
+        return $this;
+    }
+    public function setOrderLink(string $orderLink){
+        $this->setHeader("X-Order-Link",$orderLink);
+        return $this;
+    }
+
+    protected function api_request(string $url,array $json,string $apiToken,string $method, int $timeout, string $flagshipFor="", string $version="") : array
 
     {
         $curl = curl_init();
+
+        $this->setSmartshipToken($apiToken);
+        $this->setContentType();
+        $this->setAppName($flagshipFor);
 
         $options = [
             CURLOPT_URL => $url,
@@ -20,11 +37,7 @@ abstract class ApiRequest{
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_POSTFIELDS  => json_encode($json),
-            CURLOPT_HTTPHEADER => array(
-                "X-Smartship-Token: ". $apiToken,
-                "Content-Type: application/json",
-                "X-F4".$flagshipFor."-Version: ".$version
-                )
+            CURLOPT_HTTPHEADER => $this->headers
             ];
 
         curl_setopt_array($curl, $options);
@@ -53,6 +66,24 @@ abstract class ApiRequest{
             return $this;
         }
         throw new FilterException("Invalid filter argument provided");
+    }
+
+    protected function setSmartshipToken(string $token){
+        $this->setHeader("X-Smartship-Token",$token);
+        return $this;
+    }
+    protected function setContentType(){
+        $this->setHeader("Content-Type","application/json");
+        return $this;
+    }
+    protected function setAppName(string $appName){
+        $this->setHeader("X-App-Name",$appName);
+        return $this;
+    }
+
+    private function setHeader(string $key, string $value){
+        $this->headers[] = $key.": ".$value;
+        return $this; 
     }
 
 }
