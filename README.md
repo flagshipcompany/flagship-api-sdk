@@ -93,6 +93,7 @@ $payload = [
 
 try{
     $rates = $flagship->createQuoteRequest($payload)->execute();
+    //$rates = $flagship->createQuoteRequest($payload)->setStoreName("My Awesome Store")->setOrderId(1234)->execute();
 }
 catch(QuoteException $e){
     echo $e->getMessage();
