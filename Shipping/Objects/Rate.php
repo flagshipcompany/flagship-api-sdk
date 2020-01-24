@@ -53,7 +53,7 @@ class Rate
         return property_exists($this->rate,'service') ? $this->rate->service->flagship_code : '';
     }
 
-    public function getTransitTime() : string
+    public function getTransitTime() : ?string
     {
         return $this->rate->service->transit_time;
     }
