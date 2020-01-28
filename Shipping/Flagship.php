@@ -2,7 +2,6 @@
 
 namespace Flagship\Shipping;
 
-use Flagship\Shipping\Requests\ValidateTokenRequest;
 use Flagship\Shipping\Requests\AvailableServicesRequest;
 use Flagship\Shipping\Requests\QuoteRequest;
 use Flagship\Shipping\Requests\RateRequest;
@@ -27,6 +26,8 @@ use Flagship\Shipping\Requests\GetManifestsListRequest;
 use Flagship\Shipping\Requests\CancelManifestByIdRequest;
 use Flagship\Shipping\Requests\ConfirmManifestByIdRequest;
 use Flagship\Shipping\Requests\GetDhlEcommOpenShipmentsRequest;
+use Flagship\Shipping\Requests\ValidateTokenRequest;
+use Flagship\Shipping\Requests\GetAddressByTokenRequest;
 use Flagship\Shipping\objects\Rate;
 use Flagship\Shipping\Objects\Manifest;
 use Flagship\Shipping\Exceptions\CreateManifestException;
@@ -48,6 +49,11 @@ class Flagship{
     public function availableServicesRequest() : AvailableServicesRequest {
         $availableServicesRequest = new AvailableServicesRequest($this->apiToken,$this->apiUrl,$this->flagshipFor,$this->version);
         return $availableServicesRequest;
+    }
+
+    public function getAddressByTokenRequest(string $token) : GetAddressByTokenRequest {
+        $getAddressByTokenRequest = new GetAddressByTokenRequest($token,$this->apiUrl,$this->flagshipFor,$this->version);
+        return $getAddressByTokenRequest;
     }
 
     /* DHL Ecomm Requests start */
