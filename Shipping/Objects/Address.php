@@ -22,11 +22,11 @@ class Address{
         return $this->address->address;
     }
 
-    public function getSuite() : string {
+    public function getSuite() : ?string {
         return $this->address->suite;
     }
 
-    public function getDepartment() : string {
+    public function getDepartment() : ?string {
         return $this->address->department;
     }
 
@@ -54,7 +54,7 @@ class Address{
         return $this->address->phone;
     }
 
-    public function getPhoneExt() : string {
+    public function getPhoneExt() : ?string {
         return $this->address->phone_ext;
     }
 
