@@ -27,6 +27,14 @@ use Flagship\Shipping\Exceptions\QuoteException;
 
 require_once './vendor/autoload.php';
 
+/*
+ * @params 
+ * MY_ACCESS_TOKEN : use your Flagship token
+ * For test environment use https://test-api.smartship.io and https://api.smartship.io for a live one
+ * MY_WEBSITE : name of your website
+ * API_VERSION : this is same as the tag number from github. Instead of master branch, download the latest tag. It is something like v1.1.x
+ */
+
 $flagship = new Flagship('MY_ACCESS_TOKEN', 'https://api.smartship.io','MY_WEBSITE','API_VERSION');
 
 $payload = [
