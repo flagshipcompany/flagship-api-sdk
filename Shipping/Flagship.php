@@ -10,6 +10,7 @@ use Flagship\Shipping\Requests\GetShipmentListRequest;
 use Flagship\Shipping\Requests\PrepareShipmentRequest;
 use Flagship\Shipping\Requests\EditShipmentRequest;
 use Flagship\Shipping\Requests\ConfirmShipmentRequest;
+use Flagship\Shipping\Requests\ConfirmShipmentByIdRequest;
 use Flagship\Shipping\Requests\CancelShipmentRequest;
 use Flagship\Shipping\Requests\CancelPickupRequest;
 use Flagship\Shipping\Requests\EditPickupRequest;
@@ -116,10 +117,10 @@ class Flagship{
             $manifestId = $this->createManifestRequest($manifestPayload)->execute()->getId();
             $associateShipment = $this->associateShipmentRequest($manifestId,$associateShipmentPayload)->execute();
             if($associateShipment === TRUE){
-               $depotShipment = $this->createDepotShipmentRequest($depotPayload)->execute();   
+               $depotShipment = $this->createDepotShipmentRequest($depotPayload)->execute();
                $associateToDepotPayload = ["shipment_id" => $depotShipment->getId() ];
                $this->associateToDepotRequest($manifestId,$associateToDepotPayload)->execute();
-               $this->confirmManifestbyIdRequest($manifestId)->execute(); 
+               $this->confirmManifestbyIdRequest($manifestId)->execute();
             }
             $manifest = $this->getManifestByIdRequest($manifestId)->execute();
             return $manifest;
@@ -173,7 +174,6 @@ class Flagship{
     public function editShipmentRequest(array $payload,int $shipmentId) : EditShipmentRequest {
         $editShipmentRequest = new EditShipmentRequest($this->apiUrl,$this->apiToken,$payload,$shipmentId,$this->flagshipFor,$this->version);
         return $editShipmentRequest;
-
     }
 
     public function trackShipmentRequest(int $id) : TrackShipmentRequest {
@@ -184,13 +184,16 @@ class Flagship{
     public function confirmShipmentRequest(array $payload) : ConfirmShipmentRequest {
         $confirmShipmentRequest = new ConfirmShipmentRequest($this->apiUrl,$this->apiToken,$payload,$this->flagshipFor,$this->version);
         return $confirmShipmentRequest;
+    }
 
+    public function confirmShipmentByIdRequest(int $id) : ConfirmShipmentByIdRequest {
+        $confirmShipmentByIdRequest = new ConfirmShipmentByIdRequest($this->apiUrl,$this->apiToken,$id,$this->flagshipFor,$this->version);
+        return $confirmShipmentByIdRequest;
     }
 
     public function cancelShipmentRequest(int $id) : CancelShipmentRequest {
         $cancelShipmentRequest = new CancelShipmentRequest($this->apiUrl,$this->apiToken,$id,$this->flagshipFor,$this->version);
         return $cancelShipmentRequest;
-
     }
 
     public function createPickupRequest(array $pickupPayload) : CreatePickupRequest {
