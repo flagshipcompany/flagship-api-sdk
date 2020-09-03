@@ -29,7 +29,7 @@ use Flagship\Shipping\Requests\ConfirmManifestByIdRequest;
 use Flagship\Shipping\Requests\GetDhlEcommOpenShipmentsRequest;
 use Flagship\Shipping\Requests\ValidateTokenRequest;
 use Flagship\Shipping\Requests\GetAddressByTokenRequest;
-use Flagship\Shipping\objects\Rate;
+use Flagship\Shipping\Objects\Rate;
 use Flagship\Shipping\Objects\Manifest;
 use Flagship\Shipping\Exceptions\CreateManifestException;
 use Flagship\Shipping\Exceptions\AssociateShipmentException;
