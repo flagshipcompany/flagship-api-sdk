@@ -8,6 +8,7 @@ Please go through the documentation at https://docs.smartship.io/ for all inform
 # Requirements
 
 Composer
+
 PHP 7.1
 
 # Installation
