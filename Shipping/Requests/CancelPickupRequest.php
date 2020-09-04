@@ -12,14 +12,21 @@ class CancelPickupRequest extends ApiRequest{
         $this->version = $version;
     }
 
-    public function execute() : int {
+    public function execute() : bool {
         try{
             $cancelPickupRequest = $this->api_request($this->url,[],$this->token,'DELETE',30,$this->flagshipFor,$this->version);
-            return $cancelPickupRequest["httpcode"];
-
+            $this->responseCode = $cancelPickupRequest["httpcode"];
+            return $cancelPickupRequest["httpcode"] == 200 ? TRUE : FALSE;
         }
         catch(ApiException $e){
             throw new CancelPickupException($e->getMessage());
         }
+    }
+
+    public function getResponseCode() : ?int {
+        if(isset($this->responseCode)){
+            return $this->responseCode;
+        }
+        return NULL;
     }
 }

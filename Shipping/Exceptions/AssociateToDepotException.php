@@ -1,7 +1,7 @@
 <?php
 namespace Flagship\Shipping\Exceptions;
 
-use Flagship\Shipping\Exceptions\Smartship;
+use Flagship\Shipping\Exceptions\SmartshipException;
 
 class AssociateToDepotException extends SmartshipException{
 

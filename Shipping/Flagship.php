@@ -4,7 +4,6 @@ namespace Flagship\Shipping;
 
 use Flagship\Shipping\Requests\AvailableServicesRequest;
 use Flagship\Shipping\Requests\QuoteRequest;
-use Flagship\Shipping\Requests\RateRequest;
 use Flagship\Shipping\Requests\CreatePickupRequest;
 use Flagship\Shipping\Requests\GetShipmentListRequest;
 use Flagship\Shipping\Requests\PrepareShipmentRequest;
@@ -29,7 +28,7 @@ use Flagship\Shipping\Requests\ConfirmManifestByIdRequest;
 use Flagship\Shipping\Requests\GetDhlEcommOpenShipmentsRequest;
 use Flagship\Shipping\Requests\ValidateTokenRequest;
 use Flagship\Shipping\Requests\GetAddressByTokenRequest;
-use Flagship\Shipping\objects\Rate;
+use Flagship\Shipping\Objects\Rate;
 use Flagship\Shipping\Objects\Manifest;
 use Flagship\Shipping\Exceptions\CreateManifestException;
 use Flagship\Shipping\Exceptions\AssociateShipmentException;

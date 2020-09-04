@@ -2,8 +2,6 @@
 
 namespace Flagship\Shipping\Objects;
 
-use Flagship\Shipping\Responses\QuoteResponse;
-
 class Rate
 {
     public function __construct( \stdClass $rate )
