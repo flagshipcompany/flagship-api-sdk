@@ -21,7 +21,12 @@ class CreatePickupRequest extends ApiRequest{
     public function execute() : Pickup {
         try{
             $pickupRequest = $this->api_request($this->url,$this->pickupPayload,$this->token,'POST',30,$this->flagshipFor,$this->version);
-            $pickupObject = count((array)$pickupRequest["response"]) == 0 ? new \stdClass() : $pickupRequest["response"]->content;
+            $pickupObject = count((array)$pickupRequest["response"]) == 0 ? 
+                            new \stdClass() : 
+                            ( is_array($pickupRequest["response"]->content) ? 
+                                (object)$pickupRequest["response"]->content[0]: 
+                                $pickupRequest["response"]->content );
+
             $pickup = new Pickup($pickupObject);
             $this->responseCode = $pickupRequest["httpcode"];
             return $pickup;
