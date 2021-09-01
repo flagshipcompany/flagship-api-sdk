@@ -1,6 +1,6 @@
 # flagship-api-sdk
 
-Library to use FlagShip API
+PHP Library to use FlagShip API
 
 # License: MIT
 Please go through the documentation at https://docs.smartship.io/ for all information about the API.
