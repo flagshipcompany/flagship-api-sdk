@@ -36,6 +36,11 @@ class SmartshipException extends \Exception{
             return $errorsArray;
         }
 
+        if(array_key_exists('executedCommand', $errors)){
+            $errorsArray = [ $errors[0] ];
+            return $errorsArray;
+        }
+
         if(count($errors) === 1){
             $errorsArray[] = $this->normalizeErrors($errors);
             return $errorsArray;
