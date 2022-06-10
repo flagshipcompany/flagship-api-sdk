@@ -58,7 +58,7 @@ class Rate
 
     public function getTaxesDetails() : array
     {
-        if(!property_exists($this->rate,'price')){
+        if(!property_exists($this->rate,'price') || (property_exists($this->rate,'price') && $this->rate->price->taxes == NULL)){
             return [];
         }
         foreach ($this->rate->price->taxes as $key => $value) {
