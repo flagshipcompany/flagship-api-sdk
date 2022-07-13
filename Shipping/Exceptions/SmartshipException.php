@@ -51,8 +51,7 @@ class SmartshipException extends \Exception{
         $keys = array_keys($errors);
 
         foreach($errors as $error){
-
-            $errorsArray[] = $keys[$i]." : ".$this->normalizeErrors($error);
+            $errorsArray[] = strtoupper($keys[$i])." : ".$this->normalizeErrors($error);
             $i++;
         }
         return $errorsArray;
