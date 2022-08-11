@@ -24,6 +24,7 @@ class SmartshipException extends \Exception{
         }
 
         $errors = json_decode($this->message,TRUE)["errors"];
+        $notices = json_decode($this->message,TRUE)["notices"];
 
         if(is_null($errors)){
             $errorsArray = [ $this->message ];
@@ -42,6 +43,7 @@ class SmartshipException extends \Exception{
 
         if(count($errors) === 1){
             $errorsArray[] = $this->normalizeErrors($errors);
+            $errorsArray[] = $notices!= NULL ? $this->normalizeNotices($notices) : '';
             return $errorsArray;
         }
 
@@ -53,6 +55,7 @@ class SmartshipException extends \Exception{
             $errorsArray[] = strtoupper($keys[$i])." : ".$this->normalizeErrors($error);
             $i++;
         }
+        $errorsArray[] = $notices != NULl ? $this->normalizeNotices($notices) : '';
         return $errorsArray;
 
     }
@@ -107,6 +110,14 @@ class SmartshipException extends \Exception{
         if($this->code === 404){
             return ['Requested shipment not found'];
         }
+    }
+
+    protected function normalizeNotices($notices) : string {
+        $errorMsg = '';
+        foreach ($notices as $notice) {
+            $errorMsg .= is_string($notice) ? $notice."\n" : '';
+        }
+        return $errorMsg;
     }
 
 }
