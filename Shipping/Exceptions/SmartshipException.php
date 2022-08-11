@@ -6,7 +6,6 @@ class SmartshipException extends \Exception{
     protected function getErrors() : array {
 
         if(empty($this->message)){
-
             $this->message = 'Unable to connect to FlagShip - Code : '. $this->getCode();
             $errorsArray = [ $this->message ];
             return $errorsArray;
@@ -64,11 +63,11 @@ class SmartshipException extends \Exception{
 
     protected function normalizeErrors(array $error) : string {
         $errorMsg = '';
-        while(!is_string($error)){
+        while(!is_string($error) && $error != NULL){ 
             $errorMsg .= is_string(key($error)) ? key($error)." : " : "";
             $error = reset($error);
         }
-        $errorMsg .= $error;
+        $errorMsg .= $error != NULL ? $error : 'Returned a NULL error';
         return $errorMsg;
     }
 
