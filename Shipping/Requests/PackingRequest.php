@@ -9,17 +9,21 @@ use Flagship\Shipping\Collections\PackingCollection;
 class PackingRequest extends ApiRequest{
 
     protected $responseCode;
-    public function __construct(string $baseUrl,string $token, array $payload, string $flagshipFor, string $version){
-        $this->token = $token;
-        $this->url = $baseUrl.'/v2/ship/packing';
-        $this->payload = $payload;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
+    protected $apiUrl;
+    
+    public function __construct(
+        protected string $baseUrl,
+        protected string $apiToken, 
+        protected array $payload, 
+        protected string $flagshipFor, 
+        protected string $version)
+    {
+        $this->apiUrl = $baseUrl.'/v2/ship/packing';
     }
 
     public function execute() : PackingCollection {
         try{
-            $packingRequest = $this->api_request($this->url,$this->payload,$this->token,'POST',30,$this->flagshipFor,$this->version);
+            $packingRequest = $this->api_request($this->apiUrl,$this->payload,$this->apiToken,'POST',30,$this->flagshipFor,$this->version);
             $packagingObject = count((array)$packingRequest["response"]) == 0 ? [] : $packingRequest["response"]->content->packages;
             $packages = new PackingCollection();
 

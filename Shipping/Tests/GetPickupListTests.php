@@ -8,6 +8,9 @@ use Flagship\Shipping\Collections\GetPickupListCollection;
 use Flagship\Shipping\Exceptions\GetPickupListException;
 
 class GetPickupListTests extends TestCase{
+    private $getPickupListRequest;
+    private $getPickupList;
+    private $pickupList;
 
     public function testGetById(){
         $this->assertNotNull($this->pickupList->getById(1276083));
@@ -198,7 +201,7 @@ class GetPickupListTests extends TestCase{
             ]';
         $this->getPickupListRequest = $this->getMockBuilder(GetPickupListRequest::class)
             ->setConstructorArgs(['testToken','localhost','test','1.0.11'])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
         $this->getPickupList = $this->getPickupListRequest->execute();
         $this->pickupList = new GetPickupListCollection();

@@ -12,11 +12,15 @@ class GetShipmentListRequest extends ApiRequest{
 
     protected $responseCode;
     protected $filters;
-    public function __construct(string $baseUrl,string $token, string $flagshipFor, string $version) {
-        $this->token = $token;
-        $this->url = $baseUrl . '/ship/shipments';
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
+    protected $apiUrl;
+    
+    public function __construct(
+        protected string $baseUrl,
+        protected string $apiToken, 
+        protected string $flagshipFor, 
+        protected string $version) 
+    {
+        $this->apiUrl = $baseUrl . '/ship/shipments';
         $this->filters = [
                     'courier',
                     'status',
@@ -30,7 +34,7 @@ class GetShipmentListRequest extends ApiRequest{
 
     public function execute() : GetShipmentListCollection {
         try{
-            $request = $this->api_request($this->url,[],$this->token,"GET",30,$this->flagshipFor,$this->version);
+            $request = $this->api_request($this->apiUrl,[],$this->apiToken,"GET",30,$this->flagshipFor,$this->version);
             $shipmentRecords = count((array)$request["response"]) == 0 ? [] : $request["response"]->content->records;
             $shipments = new GetShipmentListCollection();
             $shipments->importShipments($shipmentRecords);

@@ -8,6 +8,9 @@ use Flagship\Shipping\Collections\AvailableServicesCollection;
 use Flagship\Shipping\Exceptions\AvailableServicesException;
 
 class AvailableServicesTests extends TestCase{
+    private $availableServices;
+    private $getAvailableServices;
+    private $getAvailableServicesRequest;
 
     public function testGetServicesByCourier(){
         $this->assertNotEmpty($this->availableServices->getServicesByCourier('canpar'));
@@ -418,7 +421,7 @@ class AvailableServicesTests extends TestCase{
 
         $this->getAvailableServicesRequest = $this->getMockBuilder(AvailableServicesRequest::class)
             ->setConstructorArgs(['testToken','localhost','test','1.0.11'])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
         $this->getAvailableServices = $this->getAvailableServicesRequest->execute();
 

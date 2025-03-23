@@ -6,7 +6,9 @@ use Flagship\Shipping\Objects\Pickup;
 
 class EditPickupTests extends TestCase{
 
-  public function testGetId(){
+    private $editPickup;
+
+    public function testGetId(){
         $this->assertNotEmpty($this->editPickup->getId());
         $this->assertNotNull($this->editPickup->getId());
         $this->assertSame(1085704,$this->editPickup->getId());
@@ -225,7 +227,7 @@ class EditPickupTests extends TestCase{
 
         $this->editPickup = $this->getMockBuilder(Pickup::class)
                               ->setConstructorArgs([json_decode($response)])
-                              ->setMethods(['__construct'])
+                              ->onlyMethods(['__construct'])
                               ->getMock();
 
     }

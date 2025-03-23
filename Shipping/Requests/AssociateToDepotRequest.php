@@ -8,12 +8,18 @@ use Flagship\Shipping\Exceptions\AssociateToDepotException;
 
 class AssociateToDepotRequest extends ApiRequest{
 
-    public function __construct(string $apiToken,string $baseUrl,int $manifestId,array $payload,string $flagshipFor,string $version){
-        $this->apiToken = $apiToken;
+    protected $apiUrl;
+    protected $responseCode;
+
+    public function __construct(
+        protected string $apiToken,
+        string $baseUrl,
+        int $manifestId,
+        protected array $payload,
+        protected string $flagshipFor,
+        protected string $version
+    ){
         $this->apiUrl = $baseUrl.'/ship/edhl/to-depot/'.$manifestId;
-        $this->payload = $payload;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
     }
 
     public function execute() : bool {

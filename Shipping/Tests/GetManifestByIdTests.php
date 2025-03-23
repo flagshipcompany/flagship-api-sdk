@@ -12,6 +12,10 @@ use \PHPUnit\Framework\TestCase;
 
 class GetManifestByIdTests extends TestCase{
 
+    private $getManifestByIdRequest;
+    private $manifestRequest;
+    private $manifest;
+
     public function testGetName(){
         $this->assertNotNull($this->manifest->getName());
         $this->assertSame('completeManifest',$this->manifest->getName());
@@ -310,7 +314,7 @@ class GetManifestByIdTests extends TestCase{
 
         $this->getManifestByIdRequest = $this->getMockBuilder(GetManifestByIdRequest::class)
             ->setConstructorArgs(['testToken','localhost',20,'test','1.0.11'])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
         $this->manifestRequest = $this->getManifestByIdRequest->execute();
         $this->manifest = new Manifest(json_decode($response));

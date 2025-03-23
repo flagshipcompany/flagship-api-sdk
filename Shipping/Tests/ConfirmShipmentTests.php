@@ -6,6 +6,8 @@ use Flagship\Shipping\Objects\Shipment;
 
 class ConfirmShipmentTests extends TestCase{
 
+        private $confirmShipment;
+        
         public function testGetId(){
             $this->assertNotEmpty($this->confirmShipment->getId());
             $this->assertNotNull($this->confirmShipment->getId());
@@ -151,7 +153,7 @@ class ConfirmShipmentTests extends TestCase{
 
             $this->confirmShipment = $this->getMockBuilder(Shipment::class)
                               ->setConstructorArgs([json_decode($response)])
-                              ->setMethods(['__construct']) 
+                              ->onlyMethods(['__construct']) 
                               ->getMock();
 
         }

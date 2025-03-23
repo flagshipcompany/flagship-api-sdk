@@ -19,7 +19,7 @@ class AssociateShipmentTests extends TestCase{
     protected function setUp() : void {
         $this->associateShipmentRequest = $this->getMockBuilder(AssociateShipmentRequest::class)
             ->setConstructorArgs(['testToken','localhost',20,[],'test','1.0.11'])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
     }
 }

@@ -8,11 +8,17 @@ use Flagship\Shipping\Objects\Manifest;
 
 class GetManifestByIdRequest extends ApiRequest {
 
-    public function __construct(string $token, string $baseUrl, int $manifestId, string $flagshipFor, string $version){
-        $this->apiToken = $token;
+    protected int $responseCode;
+    protected string $apiUrl;
+    
+    public function __construct(
+        protected string $apiToken, 
+        protected string $baseUrl, 
+        int $manifestId, 
+        protected string $flagshipFor, 
+        protected string $version)
+    {
         $this->apiUrl = $baseUrl.'/ship/edhl/'.$manifestId;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
     }
 
     public function execute() : Manifest {

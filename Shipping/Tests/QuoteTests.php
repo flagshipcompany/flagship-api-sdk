@@ -9,6 +9,10 @@ use Flagship\Shipping\Exceptions\QuoteException;
 
 class QuoteTests extends TestCase{
 
+    private $getQuoteRequest;
+    private $quoteRequest;
+    private $rates;
+    
     public function testGetCheapest(){
         $this->assertNotNull($this->rates->getCheapest());
         $this->assertInstanceOf(Rate::class,$this->rates->getCheapest());
@@ -365,7 +369,7 @@ class QuoteTests extends TestCase{
 
         $this->getQuoteRequest = $this->getMockBuilder(QuoteRequest::class)
             ->setConstructorArgs(['testToken','localhost',[],'test','1.0.11'])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
         $this->quoteRequest = $this->getQuoteRequest->execute();
         $this->rates = new RatesCollection();

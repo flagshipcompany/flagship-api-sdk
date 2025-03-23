@@ -10,6 +10,10 @@ use Flagship\Shipping\Objects\Rate;
 
 class GetDhlEcommRatesTests extends TestCase{
 
+    private $getDhlEcommRatesRequest;
+    private $ratesRequest;
+    private $rates;
+
     public function testGetCheapest(){
         $this->assertNotNull($this->rates->getCheapest());
         $this->assertSame(31.18,$this->rates->getCheapest()->getTotal());
@@ -92,7 +96,7 @@ class GetDhlEcommRatesTests extends TestCase{
 
         $this->getDhlEcommRatesRequest = $this->getMockBuilder(GetDhlEcommRatesRequest::class)
             ->setConstructorArgs(['testToken','localhost',['payload'],'testing','1.0.11'])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
         $this->ratesRequest = $this->getDhlEcommRatesRequest->execute();
         $this->rates = new RatesCollection();

@@ -3,8 +3,9 @@ namespace Flagship\Shipping\Objects;
 
 class Pickup{
 
-    public function __construct(\stdClass $pickup){
-        $this->pickup = $pickup;
+    public function __construct(
+        public \stdClass $pickup)
+    {    
     }
 
     public function getId() : int {

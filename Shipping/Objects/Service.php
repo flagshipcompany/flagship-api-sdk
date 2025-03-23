@@ -4,9 +4,8 @@ namespace Flagship\Shipping\Objects;
 
 class Service
 {
-    public function __construct( \stdClass $service )
+    public function __construct( public \stdClass $service )
     {
-        $this->service = $service;
     }
 
     public function getCode() : string {

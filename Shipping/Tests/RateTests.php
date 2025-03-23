@@ -6,6 +6,8 @@ use Flagship\Shipping\Objects\Rate;
 
 class RateTests extends TestCase{
 
+    private $rate;
+    
     public function testGetTotal(){
         $this->assertNotNull($this->rate->getTotal());
         $this->assertSame(64.78, $this->rate->getTotal());
@@ -96,7 +98,7 @@ class RateTests extends TestCase{
 
         $this->rate = $this->getMockBuilder(Rate::class)
                           ->setConstructorArgs([json_decode($response)])
-                          ->setMethods(['__construct'])
+                          ->onlyMethods(['__construct'])
                           ->getMock();
 
     }

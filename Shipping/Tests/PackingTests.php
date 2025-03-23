@@ -6,6 +6,8 @@ use Flagship\Shipping\Objects\Packing;
 
 class PackingTests extends TestCase{
 
+    private $packing;
+    
     public function testGetBoxModel(){
         $this->assertNotNull($this->packing->getBoxModel());
         $this->assertSame("Le grande box", $this->packing->getBoxModel());
@@ -53,7 +55,7 @@ class PackingTests extends TestCase{
 
         $this->packing = $this->getMockBuilder(Packing::class)
                           ->setConstructorArgs([json_decode($response)])
-                          ->setMethods(['__construct'])
+                          ->onlyMethods(['__construct'])
                           ->getMock();
 
     }

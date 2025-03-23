@@ -8,6 +8,8 @@ use Flagship\Shipping\Exceptions\QuoteException;
 
 class RatesCollectionTests extends TestCase{
 
+   private $ratesCollection;
+   
     public function testGetCheapest(){ 
         $this->assertNotEmpty($this->ratesCollection->getCheapest());
         $this->assertNotNull($this->ratesCollection->getCheapest());

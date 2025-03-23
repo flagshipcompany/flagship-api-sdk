@@ -9,6 +9,10 @@ use Flagship\Shipping\Objects\Pickup;
 
 class CreatePickupTests extends TestCase{
 
+    private $createPickupRequest;
+    private $createPickup;
+    private $pickup;
+
     public function testGetId(){
         $this->assertNotNull($this->pickup->getId());
         $this->assertSame(1276084,$this->pickup->getId());
@@ -178,7 +182,7 @@ class CreatePickupTests extends TestCase{
 
         $this->createPickupRequest = $this->getMockBuilder(CreatePickupRequest::class)
             ->setConstructorArgs(['testToken','localhost',[],'test','1.0.11'])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
         $this->createPickup = $this->createPickupRequest->execute();
         $this->pickup = new Pickup(json_decode($response));

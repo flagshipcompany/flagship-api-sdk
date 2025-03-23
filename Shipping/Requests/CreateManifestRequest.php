@@ -7,14 +7,18 @@ use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\CreateManifestException;
 use Flagship\Shipping\Objects\Manifest;
 
-class CreateManifestRequest extends ApiRequest{
+class CreateManifestRequest extends ApiRequest
+{
+    protected $responseCode;
 
-    public function __construct(string $token,string $baseUrl,array $payload,string $flagshipFor,string $version){
-        $this->apiToken = $token;
+    public function __construct(
+        protected string $apiToken,
+        protected string $baseUrl,
+        protected array $payload,
+        protected string $flagshipFor,
+        protected string $version
+    ){
         $this->baseUrl = $baseUrl.'/ship/edhl/create';
-        $this->payload = $payload;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
     }
 
     public function execute() : Manifest {

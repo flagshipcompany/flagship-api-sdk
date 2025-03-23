@@ -5,16 +5,23 @@ use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\CancelPickupException;
 
 class CancelPickupRequest extends ApiRequest{
-    public function __construct(string $baseUrl,string $token,int $id, string $flagshipFor, string $version){
-        $this->url = $baseUrl.'/pickups/'.$id;
-        $this->token = $token;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
+
+    protected $apiUrl;
+    protected $responseCode;
+
+    public function __construct(
+        string $baseUrl,
+        protected string $apiToken,
+        int $id,
+        protected string $flagshipFor, 
+        protected string $version
+    ){
+        $this->apiUrl = $baseUrl.'/pickups/'.$id;
     }
 
     public function execute() : bool {
         try{
-            $cancelPickupRequest = $this->api_request($this->url,[],$this->token,'DELETE',30,$this->flagshipFor,$this->version);
+            $cancelPickupRequest = $this->api_request($this->apiUrl,[],$this->apiToken,'DELETE',30,$this->flagshipFor,$this->version);
             $this->responseCode = $cancelPickupRequest["httpcode"];
             return $cancelPickupRequest["httpcode"] == 200 ? TRUE : FALSE;
         }

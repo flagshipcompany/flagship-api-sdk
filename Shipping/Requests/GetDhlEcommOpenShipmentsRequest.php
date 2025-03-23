@@ -8,11 +8,15 @@ use Flagship\Shipping\Collections\GetShipmentListCollection;
 
 class GetDhlEcommOpenShipmentsRequest extends ApiRequest{
 
-    public function __construct(string $token,string $baseUrl,string $flagshipFor,string $version){
-        $this->apiToken = $token;
+    protected int $responseCode;
+    protected string $apiUrl;
+    public function __construct(
+        protected string $apiToken,
+        string $baseUrl,
+        protected string $flagshipFor,
+        protected string $version)
+    {
         $this->apiUrl = $baseUrl.'/ship/edhl/open-shipments';
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
     }
 
     public function execute() : GetShipmentListCollection {

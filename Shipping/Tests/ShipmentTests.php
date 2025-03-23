@@ -6,6 +6,8 @@ use Flagship\Shipping\Objects\Shipment;
 
 class ShipmentTests extends TestCase{
 
+    private $shipment;
+    
     public function testGetId(){
        $this->assertNotNull($this->shipment->getId());
        $this->assertSame(2950191, $this->shipment->getId());
@@ -277,7 +279,7 @@ class ShipmentTests extends TestCase{
             }';
         $this->shipment = $this->getMockBuilder(Shipment::class)
                           ->setConstructorArgs([json_decode($response)])
-                          ->setMethods(['__construct'])
+                          ->onlyMethods(['__construct'])
                           ->getMock();
     }
 }

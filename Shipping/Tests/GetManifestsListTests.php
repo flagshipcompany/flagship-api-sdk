@@ -10,6 +10,10 @@ use Flagship\Shipping\Exceptions\ManifestListException;
 
 class GetManifestsListTests extends TestCase{
 
+    private $getManifestsListRequest;
+    private $manifestListsRequest;
+    private $manifestList;
+
     public function testGetByStatus(){
         $this->assertNotNull($this->manifestList->getByStatus('confirmed'));
         $this->assertSame(23,$this->manifestList->getByStatus('confirmed')->first()->getId());
@@ -56,7 +60,7 @@ class GetManifestsListTests extends TestCase{
 
         $this->getManifestsListRequest = $this->getMockBuilder(GetManifestsListRequest::class)
             ->setConstructorArgs(['testToken','localhost','testing','1.0.11'])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
         $this->manifestListsRequest = $this->getManifestsListRequest->execute();
         $this->manifestList = new ManifestListCollection();

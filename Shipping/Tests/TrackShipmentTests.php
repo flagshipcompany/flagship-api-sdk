@@ -6,6 +6,8 @@ use Flagship\Shipping\Objects\TrackShipment;
 
 class TrackShipmentTests extends TestCase{
 
+    private $trackShipment;
+    
     public function testGetCurrentStatus(){
         $this->assertNotNull($this->trackShipment->getCurrentStatus());
         $this->assertSame('T',$this->trackShipment->getCurrentStatus());
@@ -34,7 +36,7 @@ class TrackShipmentTests extends TestCase{
         }';
         $this->trackShipment = $this->getMockBuilder(TrackShipment::class)
                           ->setConstructorArgs([json_decode($response)])
-                          ->setMethods(['__construct'])
+                          ->onlyMethods(['__construct'])
                           ->getMock();
     }
 }

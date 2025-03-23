@@ -10,6 +10,10 @@ use Flagship\Shipping\Objects\Shipment;
 
 class GetShipmentListTests extends TestCase{
 
+    private $getShipmentListRequest;
+    private $shipmentListRequest;
+    private $shipmentList;
+
     public function testGetById(){
         $this->expectException(GetShipmentListException::class);
         $this->assertNotNull($this->shipmentList->getById(253858));
@@ -1044,7 +1048,7 @@ class GetShipmentListTests extends TestCase{
        
         $this->getShipmentListRequest = $this->getMockBuilder(GetShipmentListRequest::class)
             ->setConstructorArgs(['testToken','localhost','test','1.0.11'])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
         $this->shipmentListRequest = $this->getShipmentListRequest->execute();
         $this->shipmentList = new GetShipmentListCollection();
