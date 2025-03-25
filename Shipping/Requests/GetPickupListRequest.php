@@ -11,11 +11,15 @@ class GetPickupListRequest extends ApiRequest{
 
     protected $responseCode;
     protected $filters;
-    public function __construct(string $baseUrl,string $token, string $flagshipFor, string $version){
+    protected $url;
+
+    public function __construct(
+        protected string $baseUrl,
+        protected string $apiToken, 
+        protected string $flagshipFor, 
+        protected string $version)
+    {
         $this->url = $baseUrl.'/pickups';
-        $this->token = $token;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
         $this->filters =[
                             'courier',
                             'date',
@@ -26,7 +30,7 @@ class GetPickupListRequest extends ApiRequest{
 
     public function execute() : GetPickupListCollection {
         try{
-            $getPickupListRequest = $this->api_request($this->url,[],$this->token,'GET',10,$this->flagshipFor,$this->version);
+            $getPickupListRequest = $this->api_request($this->url,[],$this->apiToken,'GET',10,$this->flagshipFor,$this->version);
             $getPickupListRecords = count((array)$getPickupListRequest["response"]) == 0 ? [] : $getPickupListRequest["response"]->content->records;
             $pickupList = new GetPickupListCollection();
             $pickupList->importPickups($getPickupListRecords);

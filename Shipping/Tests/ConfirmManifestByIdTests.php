@@ -12,6 +12,10 @@ use Flagship\Shipping\Collections\RatesCollection;
 
 class ConfirmManifestByIdTests extends TestCase{
 
+    private $manifestRequest;
+    private $confirmManifestByIdRequest;
+    private $manifest;
+    
     public function testGetName(){
 
         $this->assertNotNull($this->manifest->getName());
@@ -284,7 +288,7 @@ class ConfirmManifestByIdTests extends TestCase{
 
         $this->confirmManifestByIdRequest = $this->getMockBuilder(ConfirmManifestByIdRequest::class)
                           ->setConstructorArgs(['YuX5juWBvBB2oE1NohOc99qiaSutOM4C7tUpigGawkA','127.0.0.1:3002',23,'testing','1.0.11'])
-                          ->setMethods(['execute'])
+                          ->onlyMethods(['execute'])
                           ->getMock();
         $this->manifestRequest = $this->confirmManifestByIdRequest->execute();
         $this->manifest = new Manifest(json_decode($response));

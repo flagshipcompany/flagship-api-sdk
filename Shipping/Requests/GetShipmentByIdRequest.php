@@ -10,16 +10,21 @@ use Flagship\Apis\Exceptions\ApiException;
 class GetShipmentByIdRequest extends ApiRequest{
 
     protected $responseCode;
-    public function __construct(string $baseUrl,string $token,string $flagshipFor,string $version,int $id){
-        $this->url = $baseUrl.'/ship/shipments/'.$id;
-        $this->token = $token;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
+    protected $apiUrl;
+
+    public function __construct(
+        string $baseUrl,
+        protected string $apiToken,
+        protected string $flagshipFor,
+        protected string $version,
+        int $id)
+    {
+        $this->apiUrl = $baseUrl.'/ship/shipments/'.$id;
     }
 
     public function execute() : Shipment {
         try{
-            $response = $this->api_request($this->url,[],$this->token,"GET",10,$this->flagshipFor,$this->version);
+            $response = $this->api_request($this->apiUrl,[],$this->apiToken,"GET",10,$this->flagshipFor,$this->version);
             $responseObject = count((array)$response["response"]) == 0 ? new \stdClass() : $response["response"]->content;
             $shipment = new Shipment($responseObject);
             $this->responseCode = $response["httpcode"];

@@ -7,8 +7,8 @@ use Flagship\Shipping\Objects\Package;
 
 class Shipment{
 
-    public function __construct(\stdclass $shipment){
-        $this->shipment = $shipment;
+    public function __construct(public \stdclass $shipment)
+    {
     }
 
     public function getId() : int {

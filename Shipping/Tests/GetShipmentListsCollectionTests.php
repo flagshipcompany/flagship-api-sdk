@@ -8,6 +8,8 @@ use Flagship\Shipping\Objects\Shipment;
 
 class GetShipmentListsCollectionTests extends TestCase{
 
+    private $shipmentsCollection;
+    
     public function testGetById(){
         $this->assertNotNull($this->shipmentsCollection->getById(2950191));
         $this->assertInstanceOf(Shipment::class , $this->shipmentsCollection->getById(2950191));

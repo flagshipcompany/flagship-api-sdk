@@ -8,8 +8,8 @@ use Flagship\Shipping\Collections\RatesCollection;
 
 class Manifest{
 
-    public function __construct(\stdClass $manifest){
-        $this->manifest = $manifest;
+    public function __construct(public \stdClass $manifest)
+    {
     }
 
     public function getName() : string {

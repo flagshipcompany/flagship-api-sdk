@@ -2,8 +2,8 @@
 namespace Flagship\Shipping\Objects;
 
 class Address{
-    public function __construct(\stdClass $address){
-        $this->address = $address;
+    public function __construct(public \stdClass $address)
+    {
     }
 
     public function getId() : int {

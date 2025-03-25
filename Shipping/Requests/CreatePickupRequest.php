@@ -7,20 +7,24 @@ use Flagship\Shipping\Objects\Pickup;
 use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\CreatePickupException;
 
-
 class CreatePickupRequest extends ApiRequest{
+    
     protected $responseCode;
-    public function __construct(string $baseUrl,string $token,array $pickupPayload, string $flagshipFor, string $version){
-        $this->url = $baseUrl.'/pickups';
-        $this->token = $token;
-        $this->pickupPayload = $pickupPayload;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
+    protected $apiUrl;
+
+    public function __construct(
+        protected string $baseUrl,
+        protected string $apiToken,
+        protected array $payload, 
+        protected string $flagshipFor, 
+        protected string $version
+    ){
+        $this->apiUrl = $baseUrl.'/pickups';
     }
 
     public function execute() : Pickup {
         try{
-            $pickupRequest = $this->api_request($this->url,$this->pickupPayload,$this->token,'POST',30,$this->flagshipFor,$this->version);
+            $pickupRequest = $this->api_request($this->apiUrl,$this->payload,$this->apiToken,'POST',30,$this->flagshipFor,$this->version);
             $pickupObject = count((array)$pickupRequest["response"]) == 0 ? 
                             new \stdClass() : 
                             ( is_array($pickupRequest["response"]->content) ? 

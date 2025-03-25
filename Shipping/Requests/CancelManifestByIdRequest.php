@@ -6,12 +6,18 @@ use Flagship\Apis\Exceptions\ApiException;
 use Flagship\Shipping\Exceptions\CancelManifestByIdException;
 
 class CancelManifestByIdRequest extends ApiRequest{
+    
+    protected $apiUrl;
+    protected $responseCode;
 
-    public function __construct(string $apiToken,string $baseUrl,int $manifestId,string $flagshipFor,string $version){
-        $this->apiToken = $apiToken;
+    public function __construct(
+        protected string $apiToken,
+        protected string $baseUrl,
+        int $manifestId,
+        protected string $flagshipFor,
+        protected string $version
+    ){
         $this->apiUrl = $baseUrl.'/ship/edhl/'.$manifestId;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
     }
 
     public function execute() : bool {

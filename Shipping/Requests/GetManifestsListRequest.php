@@ -9,11 +9,16 @@ use Flagship\Shipping\Collections\ManifestListCollection;
 
 class GetManifestsListRequest extends ApiRequest{
 
-    public function __construct(string $token, string $baseUrl,string $flagshipFor,string $version){
-        $this->apiToken = $token;
+    protected int $responseCode;
+    protected string $apiUrl;
+
+    public function __construct(
+        protected string $apiToken, 
+        string $baseUrl,
+        protected string $flagshipFor,
+        protected string $version)
+    {
         $this->apiUrl = $baseUrl.'/ship/edhl/';
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
     }
 
     public function execute() : ManifestListCollection {

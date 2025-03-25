@@ -8,16 +8,22 @@ use Flagship\Shipping\Objects\TrackShipment;
 
 class TrackShipmentRequest extends ApiRequest{
 
-    public function __construct(string $baseUrl,string $token,int $id, string $flagshipFor, string $version){
-        $this->url= $baseUrl.'/ship/track?shipment_id='.$id;
-        $this->token = $token;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
+    protected int $responseCode;
+    protected string $apiUrl;
+    
+    public function __construct(
+        protected string $baseUrl,
+        protected string $apiToken,
+        int $id,
+        protected string $flagshipFor,
+        protected string $version
+    ){
+        $this->apiUrl= $baseUrl.'/ship/track?shipment_id='.$id;
     }
 
     public function execute() {
         try{
-            $trackShipment = $this->api_request($this->url,[],$this->token,'GET',30,$this->flagshipFor,$this->version);
+            $trackShipment = $this->api_request($this->apiUrl,[],$this->apiToken,'GET',30,$this->flagshipFor,$this->version);
             $this->responseCode = $trackShipment["httpcode"];
             $trackingObject = count((array)$trackShipment["response"]) == 0 ? new \stdClass() : $trackShipment["response"]->content ;
             return new TrackShipment($trackingObject);

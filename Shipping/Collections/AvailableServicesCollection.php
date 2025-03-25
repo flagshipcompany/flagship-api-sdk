@@ -36,7 +36,7 @@ class AvailableServicesCollection extends Collection{
         });
 
         if($services->isEmpty()){
-            throw new AvailableServicesException('No services for courier - '.$courier);
+            throw new AvailableServicesException('No standard services available');
         }
 
         return $services;
@@ -48,7 +48,7 @@ class AvailableServicesCollection extends Collection{
         });
 
         if($services->isEmpty()){
-            throw new AvailableServicesException('No services for courier - '.$courier);
+            throw new AvailableServicesException('No overnight services available');
         }
 
         return $services;
@@ -60,7 +60,7 @@ class AvailableServicesCollection extends Collection{
         });
 
         if($services->isEmpty()){
-            throw new AvailableServicesException('No services for courier - '.$courier);
+            throw new AvailableServicesException('No express services available');
         }
 
         return $services;

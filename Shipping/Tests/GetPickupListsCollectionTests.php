@@ -7,7 +7,8 @@ use Flagship\Shipping\Exceptions\GetPickupListException;
 
 class GetPickupListsCollectionTests extends TestCase{
 
-
+        private $pickupList;
+        
         public function testGetById(){
 
             $this->assertNotEmpty($this->pickupList->getById(1085727));

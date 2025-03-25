@@ -9,6 +9,10 @@ use Flagship\Shipping\Exceptions\GetShipmentListException;
 
 class GetDhlEcommOpenShipmentsTests extends TestCase{
 
+    private $getDhlEcommOpenShipmentsRequest;
+    private $openShipmentsRequest;
+    private $shipmentsList;
+
     public function testGetById(){
         $this->assertNotNull($this->shipmentsList->getById(3372152));
         $this->assertInstanceOf(Shipment::class, $this->shipmentsList->getById(3372152));
@@ -61,7 +65,7 @@ class GetDhlEcommOpenShipmentsTests extends TestCase{
 
     public function testBySenderPhone(){
         $this->expectException(GetShipmentListException::class);
-        $this->assertNull($this->getBySenderPhone('317746883')); 
+        $this->assertNull($this->shipmentsList->getBySenderPhone('317746883')); 
     }
 
     public function testGetBySenderCompany(){
@@ -74,10 +78,10 @@ class GetDhlEcommOpenShipmentsTests extends TestCase{
         $this->assertInstanceOf(GetShipmentListCollection::class, $this->shipmentsList->getByReceiverCompany("INRA"));
     }
 
-    protected function setUp(){
+    protected function setUp() : void {
         $this->getDhlEcommOpenShipmentsRequest = $this->getMockBuilder(GetDhlEcommOpenShipmentsRequest::class)
                                                     ->setConstructorArgs(['testToken','testUrl',23,'testing','1.0.11'])
-                                                    ->setMethods(['execute'])
+                                                    ->onlyMethods(['execute'])
                                                     ->getMock();
         $this->openShipmentsRequest = $this->getDhlEcommOpenShipmentsRequest->execute();
         

@@ -39,12 +39,12 @@ use Flagship\Shipping\Exceptions\GetManifestByIdException;
 
 class Flagship{
 
-    public function __construct(string $apiToken, string $apiUrl, string $flagshipFor='', string $version=''){
-        $this->apiUrl = $apiUrl;
-        $this->apiToken = $apiToken;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
-    }
+    public function __construct(
+        protected string $apiToken,
+        protected string $apiUrl,
+        protected string $flagshipFor='',
+        protected string $version=''
+    ){}
 
     public function availableServicesRequest() : AvailableServicesRequest {
         $availableServicesRequest = new AvailableServicesRequest($this->apiToken,$this->apiUrl,$this->flagshipFor,$this->version);

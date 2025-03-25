@@ -3,16 +3,21 @@
 namespace Flagship\Shipping\Requests;
 use Flagship\Apis\Requests\ApiRequest;
 use Flagship\Shipping\Exceptions\AssociateShipmentException;
-use Flagship\Apis\Exception\ApiException;
+use Flagship\Apis\Exceptions\ApiException;
 
 class AssociateShipmentRequest extends ApiRequest{
-    public function __construct(string $apiToken, string $baseUrl, int $manifestId, array $payload,string $flagshipFor, string $version){
+    protected $responseCode;
+    protected $apiUrl;
 
-        $this->apiToken = $apiToken;
+    public function __construct(
+        protected string $apiToken, 
+        string $baseUrl, 
+        int $manifestId,
+        protected array $payload,
+        protected string $flagshipFor, 
+        protected string $version
+    ){
         $this->apiUrl = $baseUrl.'/ship/edhl/associate/'.$manifestId;
-        $this->payload = $payload;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
     }
 
     public function execute() : bool {

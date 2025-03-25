@@ -8,6 +8,8 @@ use Flagship\Shipping\Objects\Shipment;
 
 class ManifestTests extends TestCase{
 
+    private $manifest;
+    
     public function testGetName(){
         $this->assertNotNull($this->manifest->getName());
         $this->assertSame("completeManifest", $this->manifest->getName());
@@ -294,7 +296,7 @@ class ManifestTests extends TestCase{
 
     $this->manifest = $this->getMockBuilder(Manifest::class)
                           ->setConstructorArgs([json_decode($response)])
-                          ->setMethods(['__construct'])
+                          ->onlyMethods(['__construct'])
                           ->getMock();
 
     }

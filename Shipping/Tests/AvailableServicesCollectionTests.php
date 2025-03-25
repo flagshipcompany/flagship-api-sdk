@@ -8,6 +8,7 @@ use Flagship\Shipping\Collections\AvailableServicesCollection;
 use Flagship\Shipping\Exceptions\AvailableServicesException;
 
 class AvailableServicesCollectionTests extends TestCase{
+    private $servicesCollection;
 
     public function testGetServicesByCourier(){
         $this->assertNotEmpty($this->servicesCollection->getServicesByCourier('canpar'));

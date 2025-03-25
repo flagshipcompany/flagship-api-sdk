@@ -8,6 +8,10 @@ use Flagship\Shipping\Objects\Package;
 
 class GetShipmentByIdTests extends TestCase{
 
+    private $getShipmentByIdRequest;
+    private $getShipment;
+    private $shipment;
+
     public function testGetId(){
         $this->assertNotNull($this->shipment->getId());
         $this->assertSame(3372194,$this->shipment->getId());
@@ -81,7 +85,7 @@ class GetShipmentByIdTests extends TestCase{
 
     public function testGetSenderDetails(){
         $this->assertNotNull($this->shipment->getSenderDetails());
-        $this->assertInternalType('array',$this->shipment->getSenderDetails());
+        $this->assertIsArray($this->shipment->getSenderDetails());
     }
 
     public function testGetReceiverName(){
@@ -145,7 +149,7 @@ class GetShipmentByIdTests extends TestCase{
 
     public function testGetReceiverDetails(){
         $this->assertNotNull($this->shipment->getReceiverDetails());
-        $this->assertInternalType('array',$this->shipment->getReceiverDetails());
+        $this->assertIsArray($this->shipment->getReceiverDetails());
     }
 
     public function testGetReference(){
@@ -228,7 +232,7 @@ class GetShipmentByIdTests extends TestCase{
 
     public function testGetItemsDetails(){
         $this->assertNotNull($this->shipment->getItemsDetails());
-        $this->assertInternalType('array',$this->shipment->getItemsDetails());
+        $this->assertIsArray($this->shipment->getItemsDetails());
     }
 
     public function testGetSubtotal(){
@@ -389,7 +393,7 @@ class GetShipmentByIdTests extends TestCase{
 
         $this->getShipmentByIdRequest = $this->getMockBuilder(GetShipmentByIdRequest::class)
             ->setConstructorArgs(['testToken','localhost','test','1.0.11',3351627])
-            ->setMethods(['execute'])
+            ->onlyMethods(['execute'])
             ->getMock();
         $this->getShipment = $this->getShipmentByIdRequest->execute();
         $this->shipment = new Shipment(json_decode($response));

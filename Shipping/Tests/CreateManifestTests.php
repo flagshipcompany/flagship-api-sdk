@@ -8,6 +8,10 @@ use Flagship\Shipping\Objects\Manifest;
 
 class CreateManifestTests extends TestCase{
 
+    private $createManifestRequest;
+    private $manifestRequest;
+    private $manifest;
+
     public function testGetName(){
         $this->assertNotNull($this->manifest->getName());
         $this->assertIsString($this->manifest->getName());
@@ -87,7 +91,7 @@ class CreateManifestTests extends TestCase{
     protected function setUp() : void {
         $this->createManifestRequest = $this->getMockBuilder(CreateManifestRequest::class)
                           ->setConstructorArgs(['jhdgjhsgfjhsd','https://www.flagshipcompany.com',["name" => "testManifest"],'testing','1.0.11'])
-                          ->setMethods(['execute'])
+                          ->onlyMethods(['execute'])
                           ->getMock();
         $this->manifestRequest = $this->createManifestRequest->execute();
         $response = '{

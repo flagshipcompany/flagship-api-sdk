@@ -3,8 +3,8 @@
 namespace Flagship\Shipping\Objects;
 
 class Packing{
-    public function __construct(\stdClass $packing){
-        $this->packing = $packing;
+    public function __construct(public \stdClass $packing)
+    {
     }
 
     public function getBoxModel() : string {

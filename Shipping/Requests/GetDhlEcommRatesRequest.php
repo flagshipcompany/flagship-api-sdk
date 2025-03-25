@@ -9,17 +9,22 @@ use Flagship\Shipping\Exceptions\GetDhlEcommRatesException;
 
 class GetDhlEcommRatesRequest extends ApiRequest{
 
-    public function __construct(string $token,string $baseUrl,array $payload,string $flagshipFor,string $version){
-        $this->token = $token;
-        $this->url = $baseUrl.'/ship/edhl/rates';
-        $this->payload = $payload;
-        $this->flagshipFor = $flagshipFor;
-        $this->version = $version;
+    protected int $responseCode;
+    protected string $apiUrl;
+    
+    public function __construct(
+        protected string $apiToken,
+        string $baseUrl,
+        protected array $payload,
+        protected string $flagshipFor,
+        protected string $version)
+    {
+        $this->apiUrl = $baseUrl.'/ship/edhl/rates';
     }
 
     public function execute() : RatesCollection {
         try{
-            $responseArray = $this->api_request($this->url,$this->payload,$this->token,'POST',30,$this->flagshipFor,$this->version);
+            $responseArray = $this->api_request($this->apiUrl,$this->payload,$this->apiToken,'POST',30,$this->flagshipFor,$this->version);
             $responseObject = count((array)$responseArray["response"]) == 0 ? [] : $responseArray["response"]->content;
             $rates = new RatesCollection();
             $rates->importRates($responseObject);

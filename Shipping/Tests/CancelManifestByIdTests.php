@@ -6,6 +6,8 @@ use \PHPUnit\Framework\TestCase;
 use Flagship\Shipping\Requests\CancelManifestByIdRequest;
 
 class CancelManifestByIdTests extends TestCase{
+
+    private $cancelManifestByIdRequest;
     
     public function testResponseCode(){
         $this->assertNull($this->cancelManifestByIdRequest->getResponseCode());
@@ -19,7 +21,7 @@ class CancelManifestByIdTests extends TestCase{
     protected function setUp() : void {
         $this->cancelManifestByIdRequest = $this->getMockBuilder(CancelManifestByIdRequest::class)
                     ->setConstructorArgs(['testToken','localhost',84,'test','1.0.11'])
-                    ->setMethods(['execute'])
+                    ->onlyMethods(['execute'])
                     ->getMock();
     }
 }

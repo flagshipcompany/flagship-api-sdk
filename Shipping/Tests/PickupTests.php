@@ -6,6 +6,7 @@ use Flagship\Shipping\Objects\Pickup;
 
 class PickupTests extends TestCase{
 
+    private $pickup;
     public function testGetId(){
         $this->assertNotNull($this->pickup->getId());
         $this->assertSame(1085501, $this->pickup->getId());
@@ -173,7 +174,7 @@ class PickupTests extends TestCase{
 
         $this->pickup = $this->getMockBuilder(Pickup::class)
                           ->setConstructorArgs([json_decode($response)])
-                          ->setMethods(['__construct']) 
+                          ->onlyMethods(['__construct']) 
                           ->getMock();
     }
 

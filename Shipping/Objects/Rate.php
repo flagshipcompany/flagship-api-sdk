@@ -4,9 +4,8 @@ namespace Flagship\Shipping\Objects;
 
 class Rate
 {
-    public function __construct( \stdClass $rate )
+    public function __construct(public \stdClass $rate )
     {
-        $this->rate = $rate;
     }
 
     public function getTotal() : float

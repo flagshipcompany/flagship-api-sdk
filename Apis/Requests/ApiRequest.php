@@ -6,6 +6,10 @@ use Flagship\Shipping\Exceptions\FilterException;
 
 abstract class ApiRequest{
 
+    protected $headers = [];
+    protected $filters = [];
+    protected $url;
+
     public function setStoreName(string $storeName){
         $this->setHeader("X-Store-Name",$storeName);
         return $this;
